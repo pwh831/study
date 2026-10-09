@@ -11,6 +11,7 @@ study/
 │   └── regular/         공부 홈, 복습 플래너, 오답 코치, 영단어, 경제, 문학과 영상
 ├── llm/               LLM — Claude 스킬과 도구
 │   ├── quiz/            교과 암기 퀴즈를 만드는 `quiz` 스킬 (+ 첫 과목 예시: 문학과영상)
+│   ├── pdf-split/       큰 PDF를 Claude가 읽을 수 있는 크기로 나누는 브라우저 도구
 │   └── skills/          범용 스킬: critique, grill-me, grilling, log
 └── projects/          그 밖의 개인 프로젝트
     └── alarm/           FitWake — 운동해야 꺼지는 알람 (Android · iOS · 웹)
