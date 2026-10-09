@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>암기 퀴즈</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  :root{
+    --paper:#F5F1E8; --card:#FCFAF4; --ink:#1F1B16; --ink2:#5C554A; --faint:#8A8272;
+    --rule:#DCD5C6; --rule2:#C9C1B0;
+    --water:#33596B; --water-d:#1E4353; --water-t:#E7EEF1; --water-m:#5C8296;
+    --moss:#4A6E44;  --moss-t:#EAF0E7;  --moss-l:#B9CBB2;
+    --verm:#B0512C;  --verm-t:#F7EAE3;
+    --sans:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+    --serif:'Gowun Batang','Nanum Myeongjo','AppleMyungjo','Batang',serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body::after{content:'';position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .wrap{max-width:640px;margin:0 auto;padding:26px 22px 46px}
+
+  /* 표제 */
+  .eyebrow{font:500 11px/1 var(--mono);letter-spacing:.22em;color:var(--verm);margin-bottom:9px}
+  h1{font:700 30px/1.2 var(--serif);letter-spacing:-.01em;margin:0 0 6px}
+  .sub{margin:0;font-size:13px;color:var(--ink2)}
+  .dbl{margin-top:16px;border-top:2px solid var(--ink)}
+  .dbl + .dbl{margin-top:2px;border-top-width:1px}
+
+  /* 섹션 머리 */
+  .sec{display:flex;align-items:center;gap:11px;margin:0 0 14px}
+  .sec span:first-child{font:600 11px/1 var(--sans);letter-spacing:.16em;color:var(--ink2)}
+  .sec i{flex-grow:1;height:1px;background:var(--rule2);display:block}
+  .sec em{font:500 11px/1 var(--mono);color:var(--faint);font-style:normal}
+  .sec.warn span:first-child,.sec.warn em{color:var(--verm)}
+  .block{margin-bottom:26px}
+  .hint{font-size:12.5px;line-height:1.6}
+
+  /* 진도 */
+  .stats{display:flex;border:1px solid var(--rule2);background:var(--card)}
+  .stats div{flex-grow:1;flex-basis:0;padding:13px 15px;border-right:1px solid var(--rule)}
+  .stats div:last-child{border-right:0}
+  .stats k{display:block;font:500 10px/1 var(--mono);letter-spacing:.16em;color:var(--faint)}
+  .stats v{display:block;font:700 22px/1.25 var(--serif);margin-top:5px}
+  .stats small{font:400 13px var(--sans);color:var(--faint)}
+
+  /* 대단원 목록 */
+  .areatog{flex:none;min-height:30px;padding:0 11px;border:1px solid var(--rule2);border-radius:2px;
+       background:transparent;color:var(--ink2);font:500 11.5px var(--sans);cursor:pointer}
+  .areatog.on{border-color:var(--water);background:var(--water-t);color:var(--water-d)}
+  .unit{border-bottom:1px solid var(--rule);padding-bottom:0}
+  .unit:first-of-type{border-top:1px solid var(--rule)}
+  .unitrow{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:0 4px;
+       border:0;background:transparent;cursor:pointer;text-align:left;color:var(--ink)}
+  .uno{flex:none;font:500 12px var(--mono);letter-spacing:.06em;color:var(--faint);width:28px}
+  .utitle{flex-grow:1;font:600 15px var(--sans)}
+  .ucount{flex:none;font:500 12px var(--mono);color:var(--faint)}
+  .umark{flex:none;display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--rule2);
+       border-radius:50%;font-size:12px;color:transparent}
+  .unit.on .uno{color:var(--water)}
+  .unit.on .utitle{color:var(--water-d)}
+  .unit.on .ucount{color:var(--water-m)}
+  .unit.on .umark{border-color:var(--water);background:var(--water);color:var(--card)}
+  .unit.part .umark{border-color:var(--water);color:var(--water)}
+  .utitle b.out{display:inline-block;margin-left:8px;padding:1px 6px;border:1px solid var(--rule2);
+       border-radius:2px;font:500 10.5px var(--sans);color:var(--faint);vertical-align:2px}
+  .unit.out .uno,.unit.out .utitle{color:var(--faint)}
+  .unit.out.on .utitle b.out{border-color:var(--verm);color:var(--verm)}
+  .subcats{display:flex;flex-wrap:wrap;gap:6px;padding:0 4px 12px 40px}
+  .subchip{min-height:36px;padding:0 12px;border:1px solid var(--rule2);border-radius:2px;
+       background:transparent;color:var(--ink2);font:500 12.5px var(--sans);cursor:pointer}
+  .subchip n{font:500 10.5px var(--mono);color:var(--faint);margin-left:5px}
+  .subchip.on{border-color:var(--water);background:var(--water-t);color:var(--water-d);font-weight:600}
+  .subchip.on n{color:var(--water-m)}
+
+  /* 유형 선택 */
+  .types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .types .chip{min-height:56px;padding:8px 12px;text-align:left;line-height:1.3}
+  .types .chip:first-child{grid-column:1 / -1;min-height:46px}
+  .types .chip small{display:block;font:400 11px var(--sans);color:var(--faint);margin-top:2px}
+  .types .chip.on small{color:var(--water-m)}
+
+  /* 단서 */
+  .clue{margin-top:14px;border-left:3px solid var(--verm);background:var(--verm-t);
+        padding:14px 16px;font:400 16px/1.6 var(--serif);color:var(--ink)}
+  .opt.name span{font:600 16px var(--sans)}
+
+  /* O·X 판별 */
+  .card{border:1px solid var(--rule2);background:var(--card)}
+  .card .who{padding:11px 16px;border-bottom:1px solid var(--rule2);
+        font:700 17px var(--serif);letter-spacing:-.01em}
+  .card .who em{float:right;font:400 11px var(--mono);font-style:normal;color:var(--faint);
+        line-height:1.9;letter-spacing:.06em}
+  .card .stmt{padding:18px 16px;font:400 16px/1.65 var(--serif);color:var(--ink)}
+  .oxrow{display:flex;gap:9px}
+  .oxrow .btn{flex:1}
+  .btn.moss{background:var(--moss)}
+  .oxjudge{margin-top:14px;padding:13px 16px;border-left:3px solid var(--rule2);
+        background:var(--card);font-size:13.5px;line-height:1.7;color:var(--ink2)}
+  .oxjudge b{color:var(--ink);font-weight:700}
+  .oxjudge.ok{border-left-color:var(--moss)}
+  .oxjudge.no{border-left-color:var(--verm)}
+
+  /* 떠올리기 */
+  .recall{border:1px solid var(--rule2);background:var(--card);padding:26px 20px;text-align:center}
+  .recall .nm{font:700 31px/1.25 var(--serif);letter-spacing:-.01em}
+  .recall .ask{margin-top:11px;font-size:13.5px;color:var(--ink2);line-height:1.7}
+  .recall .ask em{font:500 12px var(--mono);font-style:normal;color:var(--verm)}
+
+  /* 칩·버튼 */
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{min-height:44px;padding:0 15px;border:1px solid var(--rule2);border-radius:2px;
+        background:transparent;color:var(--ink2);font:500 13.5px var(--sans);cursor:pointer}
+  .chip n{font:500 11px var(--mono);color:var(--faint);margin-left:6px}
+  .chip.on{border:1.5px solid var(--water);background:var(--water-t);color:var(--water-d);font-weight:600}
+  .chip.on n{color:var(--water-m)}
+  .grid{display:grid;gap:7px}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .grid .chip{padding:0 8px}
+  .grid .chip.on{border:1.5px solid var(--ink);background:var(--ink);color:var(--card)}
+  .grid .chip.on n{color:var(--rule2)}
+  .mono{font-family:var(--mono)}
+
+  .btn{min-height:56px;width:100%;border:0;border-radius:2px;background:var(--water);
+       color:var(--card);font:700 16px var(--sans);letter-spacing:.02em;cursor:pointer}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.ink{background:var(--ink)}
+  .btn.verm{background:var(--verm)}
+  .btn small{font:500 12px var(--mono);opacity:.7;margin-left:9px}
+  .btn2{min-height:48px;width:100%;border:1px solid var(--rule2);border-radius:2px;
+        background:transparent;color:var(--ink2);font:500 14px var(--sans);cursor:pointer}
+  .btn2.verm{border-color:var(--verm);color:var(--verm);font-weight:600}
+  .stack{display:flex;flex-direction:column;gap:9px}
+  /* 화면 아래 고정 — 범위 목록이 길어 시작 버튼이 접힘 아래로 밀리는 것 방지 */
+  .actions{position:sticky;bottom:0;z-index:5;margin:14px -22px 0;
+       padding:12px 22px calc(14px + env(safe-area-inset-bottom,0px));
+       background:var(--paper);border-top:1px solid var(--rule2)}
+  .side{display:flex;gap:9px}
+  .side .btn2{flex:1}.side .btn{flex:2}
+
+  /* 진행 눈금 */
+  .ruler{display:flex;gap:2px;align-items:flex-end;height:9px}
+  .ruler s{flex-grow:1;height:5px;background:var(--rule);text-decoration:none}
+  .ruler s.d{background:var(--ink)}
+  .ruler s.c{background:var(--verm);height:9px}
+  .meta{display:flex;justify-content:space-between;align-items:baseline;
+        font:500 12px var(--mono);letter-spacing:.08em;color:var(--ink2);margin-top:9px}
+  .meta em{color:var(--faint);font-style:normal}
+  .meta b{color:var(--moss);font-weight:500}
+
+  /* 그림 단서 (MEDIA 를 쓰는 과목에서만) */
+  .mapbox{border:1px solid var(--ink);background:var(--card);padding:10px;position:relative;
+          overflow:auto;max-height:46vh}
+  .mapbox img{display:block;width:100%;min-width:320px;mix-blend-mode:multiply}
+  .mapbox u{position:absolute;width:9px;height:9px;text-decoration:none}
+  .mapbox u.tl{left:4px;top:4px;border-left:1.5px solid var(--verm);border-top:1.5px solid var(--verm)}
+  .mapbox u.br{right:4px;bottom:4px;border-right:1.5px solid var(--verm);border-bottom:1.5px solid var(--verm)}
+  .marker{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;
+          border:2px solid var(--verm);box-shadow:0 0 0 3px rgba(176,81,44,.18);
+          animation:pulse 1.4s infinite;pointer-events:none;mix-blend-mode:normal}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(176,81,44,.18)}50%{box-shadow:0 0 0 9px rgba(176,81,44,0)}}
+  .zoom{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+  .zoom button{min-height:34px;padding:0 12px;border:1px solid var(--rule2);border-radius:2px;
+       background:transparent;font:500 12px var(--sans);color:var(--ink2);cursor:pointer}
+
+  /* 문제 */
+  .q{display:flex;align-items:flex-start;gap:12px}
+  .badge{flex:none;display:grid;place-items:center;width:38px;height:38px;border:2px solid var(--verm);
+         border-radius:50%;font:500 18px var(--mono);color:var(--verm);margin-top:2px}
+  .q h2{margin:0;font:700 21px/1.45 var(--serif);letter-spacing:-.01em}
+  .q h2 em{font-style:normal;color:var(--verm)}
+  .q h2 mark{background:none;box-shadow:inset 0 -9px 0 var(--verm-t);color:inherit}
+
+  /* 서답형 빈칸 */
+  .blank{border-bottom:2px solid var(--ink);padding:6px 2px 9px;
+       display:flex;align-items:baseline;gap:12px}
+  .blank input{flex-grow:1;min-width:0;border:0;background:transparent;outline:none;padding:0;
+       font:700 23px/1.3 var(--serif);color:var(--ink)}
+  .blank input::placeholder{color:#B8B0A0;font-weight:400}
+  .blank.ok{border-bottom-color:var(--moss)}
+  .blank.no{border-bottom-color:var(--verm)}
+  .blank .verdict{flex:none;font:600 12px var(--sans);letter-spacing:.06em}
+  .hintrow{display:flex;justify-content:space-between;margin-top:9px;font-size:12px;color:var(--faint)}
+  .hintrow em{font:500 11px var(--mono);font-style:normal}
+
+  /* 보기 */
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{display:flex;gap:11px;align-items:flex-start;text-align:left;width:100%;min-height:56px;
+       padding:13px;border:1.5px solid var(--rule2);border-radius:2px;background:transparent;cursor:pointer}
+  .opt b{flex:none;display:grid;place-items:center;width:24px;height:24px;border:1.5px solid var(--rule2);
+         border-radius:50%;font:500 12px var(--mono);color:var(--ink2);background:transparent}
+  .opt span{flex-grow:1;font:400 14.5px/1.5 var(--sans);color:var(--ink)}
+  .opt em{flex:none;align-self:center;font:500 11px var(--mono);color:var(--faint);font-style:normal}
+  .opt.correct{border-color:var(--moss);background:var(--moss-t)}
+  .opt.correct b{border-color:var(--moss);background:var(--moss);color:var(--card)}
+  .opt.wrong{border-color:var(--verm);background:var(--verm-t)}
+  .opt.wrong b{border-color:var(--verm);background:var(--verm);color:var(--card)}
+  .opt.correct em,.opt.wrong em{font-family:var(--sans);font-weight:600;letter-spacing:.06em}
+  .opt.correct em{color:var(--moss)}.opt.wrong em{color:var(--verm)}
+  .opt:disabled{cursor:default}
+
+  /* 정답 카드 */
+  .ans{border:1px solid var(--moss);background:var(--moss-t)}
+  .ans.no{border-color:var(--verm);background:var(--verm-t)}
+  .ans .top{padding:15px 16px 13px;border-bottom:1px dashed var(--moss-l)}
+  .ans.no .top{border-bottom-color:#E0BFB0}
+  .ans lbl{display:block;font:500 10px/1 var(--mono);letter-spacing:.18em;color:var(--moss);margin-bottom:7px}
+  .ans.no lbl{color:var(--verm)}
+  .ans .name{font:700 25px/1.2 var(--serif)}
+  .ans .alias{font-size:12px;color:var(--ink2);border:1px solid var(--moss-l);padding:2px 7px;margin-left:8px;
+       display:inline-block;vertical-align:3px}
+  .ans.no .alias{border-color:#E0BFB0}
+  .ans .mine{font-size:12.5px;color:var(--ink2);margin-top:6px}
+  .ans .mine b{color:var(--verm);font-weight:500}
+  .ans .feats{padding:14px 16px 16px}
+  .feat{display:flex;gap:9px}
+  .feat i{flex:none;width:4px;height:4px;background:var(--moss);margin-top:9px;display:block}
+  .ans.no .feat i{background:var(--verm)}
+  .feat span{font-size:14.5px;line-height:1.5}
+  .allfeat{border-left:2px solid var(--ink);padding:2px 0 2px 14px}
+  .allfeat lbl{display:block;font:500 10px/1 var(--mono);letter-spacing:.18em;color:var(--faint);margin-bottom:9px}
+
+  /* 결과 */
+  .score{border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:22px 0 20px;
+         display:flex;align-items:flex-end;justify-content:space-between}
+  .score .n{font:700 56px/1 var(--serif);letter-spacing:-.02em}
+  .score .of{font:400 24px/1 var(--serif);color:var(--faint);margin-left:4px}
+  .score .r{text-align:right}
+  .score .r k{display:block;font:500 10px var(--mono);letter-spacing:.16em;color:var(--faint)}
+  .score .r v{display:block;font:700 26px/1.2 var(--serif);color:var(--moss);margin-top:3px}
+  .lead{display:flex;align-items:baseline;gap:8px;padding:9px 0;border-bottom:1px dotted var(--rule2)}
+  .lead i{flex-grow:1;border-bottom:1px dotted var(--rule2);transform:translateY(-3px);display:block}
+  .lead v{font:500 13px var(--mono);color:var(--ink2)}
+  .lead v.full{color:var(--moss)}
+  .wrongrow{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .wrongrow .l{flex-grow:1;min-width:0}
+  .wrongrow .nm{font:700 16px/1.3 var(--serif)}
+  .wrongrow .ft{font-size:12.5px;color:var(--ink2);margin-top:3px}
+  /* 내 답이 5지선다의 문장 한 줄일 수 있다. flex:none 이면 그대로 화면 밖으로 밀고 나간다 */
+  .wrongrow .r{flex:0 1 auto;min-width:0;max-width:52%;text-align:right}
+  .wrongrow .r k{display:block;font:500 10px var(--mono);letter-spacing:.12em;color:var(--faint)}
+  .wrongrow .r v{display:block;font-size:13px;color:var(--verm);margin-top:3px;
+       word-break:break-word;overflow-wrap:anywhere}
+  .center{text-align:center;color:var(--ink2);font-size:14px;padding:8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow" id="eyebrow"></div>
+  <h1 id="title"></h1>
+  <p class="sub" id="lead"></p>
+  <div class="dbl"></div><div class="dbl"></div>
+  <div id="app" style="margin-top:26px"></div>
+</div>
+
+<script src="data/items.js"></script>
+<script>
+window.onerror = function(msg, src, line, col, err){
+  var box = document.getElementById("app") || document.body;
+  box.innerHTML = '<div style="border:1.5px solid #B0512C;background:#F7EAE3;padding:16px;' +
+    'border-radius:2px;font:400 13px/1.6 sans-serif;color:#1F1B16">' +
+    '<b style="display:block;margin-bottom:6px;color:#B0512C">문제가 생겼습니다</b>' +
+    '<div style="font-family:monospace;font-size:12px;word-break:break-all">' +
+    String(msg) + '<br>(' + line + ':' + col + ')</div>' +
+    '<div style="margin-top:10px;color:#5C554A">이 내용을 그대로 알려주시면 고쳐드리겠습니다.</div></div>';
+};
+
+/* ============================================================
+ * 과목에 상관없는 퀴즈 엔진.
+ *
+ * 이 파일은 과목마다 고치지 않는다. 과목의 모든 것은 data/items.js 에 있다.
+ * 고칠 일이 생기면 스킬의 원본(.claude/skills/quiz/assets/index.html)을 고치고
+ * 과목 폴더로 다시 복사한다 — 과목별로 갈라지면 고친 것이 한쪽에만 남는다.
+ * 계약은 references/data-schema.md 에 적혀 있다.
+ * ========================================================== */
+
+/* ---------- 과목 설정 ---------- */
+const MEDIA_ = (typeof MEDIA !== "undefined" && MEDIA) ? MEDIA : {};
+const HASMEDIA = Object.keys(MEDIA_).length > 0;
+document.title = SUBJECT.title;
+document.getElementById("title").textContent   = SUBJECT.title;
+document.getElementById("lead").textContent    = SUBJECT.lead || "";
+if (SUBJECT.icon){
+  const link = document.createElement("link");
+  link.rel = "icon";
+  link.href = "data:image/svg+xml," + encodeURIComponent(
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>" +
+    SUBJECT.icon + "</text></svg>");
+  document.head.appendChild(link);
+}
+
+/* ---------- 저장소 ---------- */
+const LS = (SUBJECT.key || "quiz") + "-v1";
+let store = {};
+try { store = JSON.parse(localStorage.getItem(LS) || "{}"); } catch(e){ store = {}; }
+function stat(id){ return store[id] || (store[id] = {right:0, wrong:0, streak:0, last:0}); }
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(store)); }catch(e){} }
+
+/* ---------- 정답 정규화 ---------- */
+/* SUFFIX: 있으나 없으나 같은 말로 치는 꼬리말 (지리의 '시·군·도', 문학의 '기법' 등)
+ * EQUIV : 표기만 다른 같은 말. 각 묶음의 첫 낱말로 모은다 (['쇼트','숏','샷'] → 쇼트) */
+const SUFFIX = (SUBJECT.suffixes || []).slice().sort((a,b)=>b.length-a.length);
+const EQUIV  = SUBJECT.equiv || [];
+function norm(s){
+  s = (s||"").toLowerCase().replace(/\(.*?\)/g,"").replace(/[\s·・,.\-_'"’”]/g,"");
+  for (const grp of EQUIV){
+    for (let k=1;k<grp.length;k++) s = s.split(grp[k].toLowerCase()).join(grp[0].toLowerCase());
+  }
+  return s;
+}
+function stripSuffix(s){
+  for (const suf of SUFFIX){
+    if (s.length > suf.length && s.endsWith(suf)) return s.slice(0, -suf.length);
+  }
+  return s;
+}
+function lev(a,b){
+  const m=a.length,n=b.length; if(!m) return n; if(!n) return m;
+  let prev=[...Array(n+1).keys()], cur=new Array(n+1);
+  for(let i=1;i<=m;i++){ cur[0]=i;
+    for(let j=1;j<=n;j++) cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    [prev,cur]=[cur,prev];
+  }
+  return prev[n];
+}
+/* 오타 1글자를 봐주면 서로 한 글자 차이인 항목끼리 답이 새어 나간다.
+ * (반영론/표현론처럼) 그런 이름은 오타 관용에서 뺀다 — 데이터가 결정한다. */
+const TIGHT = new Set();
+(function(){
+  const names = ITEMS.map(i=>norm(i.name));
+  for(let a=0;a<names.length;a++) for(let b=a+1;b<names.length;b++){
+    if(Math.min(names[a].length, names[b].length) >= 2 && lev(names[a],names[b]) <= 1){
+      TIGHT.add(names[a]); TIGHT.add(names[b]);
+    }
+  }
+})();
+/* 반환: "exact" | "typo" | null */
+function judge(input, item){
+  const got = norm(input);
+  if (!got) return null;
+  const cands = [item.name, ...(item.aliases||[])].map(norm);
+  const all = [...cands, ...cands.map(stripSuffix)];
+  if (all.includes(got) || all.includes(stripSuffix(got))) return "exact";
+  if (cands.some(c=>TIGHT.has(c))) return null;          // 헷갈리는 짝은 글자 하나까지 맞아야 한다
+  for (const c of all){
+    if (c.length >= 3 && lev(got, c) <= 1) return "typo";
+    if (stripSuffix(got).length >= 3 && lev(stripSuffix(got), stripSuffix(c)) <= 1) return "typo";
+  }
+  return null;
+}
+
+/* ---------- 분류 ---------- */
+const CATLABEL = Object.fromEntries(CATS.map(c=>[c.key,c.label]));
+const UNITOF   = Object.fromEntries(CATS.map(c=>[c.key,UNITS.find(u=>u.id===c.unit)]));
+const AREAOF   = Object.fromEntries(CATS.map(c=>[c.key,(UNITOF[c.key]||{}).area]));
+const CATOF    = Object.fromEntries(CATS.map(c=>[c.key,c]));
+/* 문제문에 쓸 말. 갈래가 정하고, 없으면 과목 기본값 */
+const kindOf = c => (CATOF[c] && CATOF[c].kind) || SUBJECT.kind || "항목";
+const whatOf = c => (CATOF[c] && CATOF[c].what) || SUBJECT.what || "설명";
+/* 받침 유무에 따라 조사 선택 (예: 몽타주는 / 클로즈업은) */
+function josa(word, withJong, without){
+  const last = String(word).replace(/[)\s·]+$/,"").slice(-1);
+  const code = last.charCodeAt(0);
+  if(code < 0xAC00 || code > 0xD7A3) return withJong;      // 한글이 아니면 보수적으로
+  return (code - 0xAC00) % 28 === 0 ? without : withJong;
+}
+const hasMedia = i => !!(i.media && MEDIA_[i.media]);
+const numOf    = i => hasMedia(i) && MEDIA_[i.media].labeled ? `<em>${i.num}번</em>` : "";
+
+const TYPES = [
+  {key:"both",   label:"혼합",       hint:"다섯 유형을 섞어서"},
+  {key:"write",  label:"이름 쓰기",   hint:"단서 보고 이름 타이핑"},
+  {key:"feat",   label:"설명 고르기", hint:"이름 보고 옳은 설명"},
+  {key:"rfeat",  label:"설명 → 이름", hint:"설명 보고 이름 맞히기"},
+  {key:"ox",     label:"O·X 판별",    hint:"서술이 맞는지 가려내기"},
+  {key:"recall", label:"떠올리기",    hint:"보지 않고 떠올린 뒤 확인"}
+];
+const countOf   = k => ITEMS.filter(i=>i.category===k).length;
+const NOTECOUNT = ITEMS.reduce((t,i)=>t+(i.notes||[]).length, 0);
+const unitCount = u => u.cats.reduce((t,c)=>t+countOf(c),0);
+document.getElementById("eyebrow").textContent =
+  (SUBJECT.eyebrow ? SUBJECT.eyebrow + " · " : "") + ITEMS.length + " ITEMS";
+
+/* ---------- 세션 상태 ---------- */
+const inExam   = u => u.exam !== false;
+const EXAMCATS = UNITS.filter(inExam).flatMap(u=>u.cats);
+let cfg = { cats: [...EXAMCATS], types:"both", count:20, order:"weak", notes:false };
+let quiz = null;
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]];} return a; };
+
+/* ---------- 홈 ---------- */
+function unitState(u){
+  const on = u.cats.filter(c=>cfg.cats.includes(c)).length;
+  return on===0 ? "off" : on===u.cats.length ? "on" : "part";
+}
+function unitHTML(u){
+  const st = unitState(u);
+  const sub = u.cats.length > 1
+    ? `<div class="subcats">${u.cats.map(c=>
+        `<button class="subchip ${cfg.cats.includes(c)?"on":""}" data-c="${c}">${esc(CATLABEL[c])}<n>${countOf(c)}</n></button>`
+      ).join("")}</div>` : "";
+  return `<div class="unit ${st}${inExam(u)?"":" out"}">
+    <button class="unitrow" data-u="${u.id}">
+      <span class="uno">${esc(u.no)}</span>
+      <span class="utitle">${esc(u.title)}${inExam(u)?"":`<b class="out">범위 밖</b>`}</span>
+      <span class="ucount">${unitCount(u)}</span>
+      <span class="umark">${st==="on"?"✓":st==="part"?"–":""}</span>
+    </button>${sub}
+  </div>`;
+}
+function areaHTML(a){
+  const us = UNITS.filter(u=>u.area===a.id);
+  const cats = us.flatMap(u=>u.cats);
+  const all = cats.length && cats.every(c=>cfg.cats.includes(c));
+  const n = us.reduce((t,u)=>t+unitCount(u),0);
+  return `<div class="block">
+    <div class="sec"><span>${esc(a.title)}</span><i></i>
+      <button class="areatog ${all?"on":""}" data-a="${a.id}">${all?"전체 해제":"전체 선택"}</button>
+      <em>${n}</em></div>
+    ${us.map(unitHTML).join("")}
+  </div>`;
+}
+/* 고른 범위와 고른 유형이 안 맞을 때의 안내 */
+function warnHTML(picked){
+  if(!picked) return "";
+  const inRange = ITEMS.filter(i=>cfg.cats.includes(i.category));
+  const noClue  = i => !hasMedia(i) && !feats(i).length;
+  const msg =
+    cfg.types === "write" && !inRange.some(i=>!noClue(i))
+      ? "고른 범위에는 단서로 쓸 것이 없어 '이름 쓰기'로 낼 문제가 없습니다. 다른 유형을 골라 주세요."
+    : cfg.types !== "write" && !inRange.some(i=>feats(i).length)
+      ? "고른 범위에는 설명이 없어 '이름 쓰기'로만 출제됩니다."
+    : inRange.some(noClue)
+      ? `설명도 그림도 없는 항목 ${inRange.filter(noClue).length}개는 출제에서 빠집니다.`
+    : "";
+  if(!msg) return "";
+  const warn = msg.includes("빠집니다") ? "var(--faint)" : "var(--verm)";
+  return `<div class="block" style="margin-top:-12px"><div class="hint" style="color:${warn}">${msg}</div></div>`;
+}
+
+function home(){
+  const done = Object.keys(store).length;
+  const mastered = Object.values(store).filter(s=>s.streak>=3).length;
+  const wrong = ITEMS.filter(i=>{ const s=store[i.id]; return s && s.wrong>0 && s.streak<3; }).length;
+  const picked   = ITEMS.filter(i=>cfg.cats.includes(i.category)).length;
+  const playable = pool().length;
+
+  app.innerHTML = `
+  <div class="block">
+    <div class="stats">
+      <div><k>LEARNED</k><v>${done}<small> / ${ITEMS.length}</small></v></div>
+      <div><k>MASTERED</k><v style="color:var(--moss)">${mastered}</v></div>
+      <div><k>WRONG</k><v style="color:var(--verm)">${wrong}</v></div>
+    </div>
+  </div>
+
+  <div id="scope">${AREAS.map(areaHTML).join("")}</div>
+
+  <div class="block">
+    <div class="sec"><span>출제 설정</span><i></i></div>
+    <div class="types" id="types" style="margin-bottom:9px">
+      ${TYPES.map(t=>`<button class="chip ${cfg.types===t.key?"on":""}" data-t="${t.key}">${t.label}
+        <small>${t.hint}</small></button>`).join("")}
+    </div>
+    <div class="grid g4" id="counts" style="margin-bottom:9px">
+      ${[10,20,30,999].map(n=>`<button class="chip ${cfg.count===n?"on":""} ${n===999?"":"mono"}" data-n="${n}">${n===999?"전체":n}</button>`).join("")}
+    </div>
+    <div class="grid g2" id="orders" style="margin-bottom:9px">
+      <button class="chip ${cfg.order==="weak"?"on":""}" data-o="weak">오답 우선</button>
+      <button class="chip ${cfg.order==="rand"?"on":""}" data-o="rand">랜덤</button>
+    </div>
+    ${NOTECOUNT ? `<button class="chip ${cfg.notes?"on":""}" id="notetog" style="width:100%;text-align:left;min-height:50px;line-height:1.35">
+      ${esc(SUBJECT.notesLabel || "덧붙임 내용 포함")} <n>${NOTECOUNT}</n>
+      <small style="display:block;font:400 11px var(--sans);color:${cfg.notes?"var(--water-m)":"var(--faint)"};margin-top:2px">
+        ${esc(SUBJECT.notesHint || "시험 범위 밖이지만 나온 적이 있는 서술입니다")}</small>
+    </button>` : ""}
+  </div>
+
+  ${warnHTML(picked)}
+  <div class="actions stack">
+    <button class="btn" id="start" ${playable?"":"disabled"}>시작하기<small>${
+      playable ? (cfg.count===999?playable+"문항":Math.min(cfg.count,playable)+"문항") : "낼 문제가 없습니다"}</small></button>
+    ${wrong?`<button class="btn2 verm" id="wrongOnly">오답 노트 다시 풀기 <span class="mono">${wrong}</span></button>`:""}
+    <button class="btn2" id="reset" style="border:0;color:var(--faint);font-size:12.5px;min-height:36px">기록 초기화</button>
+  </div>`;
+
+  document.getElementById("scope").onclick = e=>{
+    const sub = e.target.closest(".subchip");
+    if(sub){
+      const c = sub.dataset.c;
+      cfg.cats = cfg.cats.includes(c) ? cfg.cats.filter(x=>x!==c) : [...cfg.cats, c];
+      return home();
+    }
+    const row = e.target.closest(".unitrow");
+    if(row){
+      const u = UNITS.find(x=>x.id===row.dataset.u);
+      cfg.cats = unitState(u)==="on"
+        ? cfg.cats.filter(c=>!u.cats.includes(c))
+        : [...new Set([...cfg.cats, ...u.cats])];
+      return home();
+    }
+    const at = e.target.closest(".areatog");
+    if(at){
+      const us = UNITS.filter(u=>u.area===at.dataset.a);
+      const all = us.flatMap(u=>u.cats);
+      const on  = us.filter(inExam).flatMap(u=>u.cats);   // 켤 때는 시험 범위만
+      cfg.cats = all.every(c=>cfg.cats.includes(c)) || on.every(c=>cfg.cats.includes(c))
+        ? cfg.cats.filter(c=>!all.includes(c))
+        : [...new Set([...cfg.cats, ...on])];
+      return home();
+    }
+  };
+  document.getElementById("types").onclick  = e=>{ const el=e.target.closest(".chip"); if(el){cfg.types=el.dataset.t; home();} };
+  document.getElementById("counts").onclick = e=>{ const el=e.target.closest(".chip"); if(el){cfg.count=+el.dataset.n; home();} };
+  document.getElementById("orders").onclick = e=>{ const el=e.target.closest(".chip"); if(el){cfg.order=el.dataset.o; home();} };
+  const nt = document.getElementById("notetog");
+  if(nt) nt.onclick = ()=>{ cfg.notes = !cfg.notes; buildOwners(); home(); };
+  document.getElementById("start").onclick  = ()=>begin(pool());
+  const wo = document.getElementById("wrongOnly");
+  if(wo) wo.onclick = ()=>begin(ITEMS.filter(i=>{ const s=store[i.id]; return s && s.wrong>0 && s.streak<3; }), true);
+  document.getElementById("reset").onclick = ()=>{
+    if(confirm("학습 기록을 모두 지웁니다. 계속할까요?")){ store={}; save(); home(); }
+  };
+}
+
+function pool(){
+  let p = ITEMS.filter(i=>cfg.cats.includes(i.category))
+               .filter(i=>hasMedia(i) || feats(i).length);   // 단서가 하나도 없으면 낼 문제가 없다
+  if(!p.length) return p;
+  if(cfg.order==="weak"){
+    p = p.map(i=>{
+      const s = store[i.id] || {right:0,wrong:0,streak:0,last:0};
+      const w = 1 + s.wrong*3 - Math.min(s.streak,3)*0.8 + (s.right===0?1.5:0);
+      return {i, k: Math.random() / Math.max(w, 0.15)};
+    }).sort((a,b)=>a.k-b.k).map(x=>x.i);
+  } else shuffle(p);
+  return p;
+}
+
+function begin(list, isReview){
+  if(!list.length){ alert("선택한 범위에 문제가 없습니다."); return; }
+  const n = Math.min(cfg.count, list.length);
+  const picked = list.slice(0, n);
+  quiz = { qs: picked.map(makeQ), at:0, right:0, log:[], review:!!isReview };
+  render();
+}
+
+/* 출제 대상 서술: 본문(features) + '덧붙임 포함'을 켰을 때만 notes */
+function feats(i){
+  return cfg.notes ? [...(i.features||[]), ...(i.notes||[])] : (i.features||[]);
+}
+/* 어느 항목에 어떤 서술이 몇 번 나오는지 (중복 서술 판별용) */
+let FEATOWNERS = {};
+function buildOwners(){
+  FEATOWNERS = {};
+  ITEMS.forEach(i=>feats(i).forEach(f=>{ (FEATOWNERS[norm(f)]=FEATOWNERS[norm(f)]||[]).push(i.id); }));
+}
+buildOwners();
+
+/* 오답 보기를 어디서 길어올지: 헷갈리는 짝(confuse) → 같은 갈래 → 같은 영역 → 전체.
+ * 헷갈리는 짝을 맨 앞에 두는 것이 이 엔진의 요점이다. 아무 항목이나 섞으면
+ * 보기만 보고도 답이 보여서, 정작 시험에서 가르지 못하는 것을 연습하지 못한다. */
+function tiers(item){
+  const byId = Object.fromEntries(ITEMS.map(i=>[i.id,i]));
+  const conf = (item.confuse||[]).map(id=>byId[id]).filter(Boolean);
+  return [conf,
+          ITEMS.filter(i=>i.category===item.category),
+          ITEMS.filter(i=>AREAOF[i.category]===AREAOF[item.category]),
+          ITEMS];
+}
+
+function makeQ(item){
+  const hasFeat = feats(item).length > 0;
+  const clued   = hasMedia(item) || hasFeat;
+  let type = cfg.types;
+  if (type === "both"){
+    const menu = hasFeat ? ["write","feat","rfeat","ox","recall"] : ["write"];
+    type = menu[Math.random()*menu.length|0];
+  }
+  if (!hasFeat) type = "write";
+  if (!clued)   type = "write";
+  if (type === "feat")   return {type, item, ...buildChoices(item)};
+  if (type === "rfeat")  return {type, item, ...buildReverse(item)};
+  if (type === "write")  return {type, item, ...buildWrite(item)};
+  if (type === "ox"){
+    const q = buildOX(item);
+    return q ? {type, item, ...q} : {type:"feat", item, ...buildChoices(item)};
+  }
+  return {type, item};                       // recall
+}
+
+/* 이름 쓰기: 그림이 있으면 그림이 단서, 없으면 그 항목에만 있는 서술이 단서 */
+function buildWrite(item){
+  if (hasMedia(item)) return {clue:null};
+  const all  = feats(item);
+  const uniq = all.filter(f=>(FEATOWNERS[norm(f)]||[]).length === 1);
+  const from = uniq.length ? uniq : all;
+  return {clue: from[Math.random()*from.length|0] || null};
+}
+
+/* O·X 판별: 절반은 그 항목의 실제 서술, 절반은 다른 항목의 서술을 가져다 붙인다.
+ * 붙여 오는 서술은 헷갈리는 짝에서 먼저 고른다 — 그래야 가르는 연습이 된다. */
+function buildOX(item){
+  const mine = feats(item);
+  const mineSet = new Set(mine.map(norm));
+  const self = norm(item.name);
+  if (mine.length && Math.random() < 0.5){
+    return {stmt: mine[Math.random()*mine.length|0], truth:true, owner:item.name};
+  }
+  const take = arr => arr.filter(i=>i.id!==item.id && norm(i.name)!==self)
+                        .flatMap(i=>feats(i).map(f=>({f, from:i.name})))
+                        .filter(o=>!mineSet.has(norm(o.f)));
+  let cand = [];
+  for (const tier of tiers(item)){
+    cand = shuffle(take(tier));
+    if (cand.length) break;
+  }
+  if(!cand.length) return mine.length ? {stmt: mine[0], truth:true, owner:item.name} : null;
+  return {stmt: cand[0].f, truth:false, owner: cand[0].from};
+}
+
+/* 설명 → 이름: 단서로 쓸 서술은 그 항목에만 있는 것을 먼저 고른다 */
+function buildReverse(item){
+  const all = feats(item);
+  const uniq = all.filter(f=>FEATOWNERS[norm(f)].length === 1);
+  const clue = (uniq.length ? uniq : all)[Math.random()*(uniq.length||all.length)|0];
+  const owners = new Set(FEATOWNERS[norm(clue)]);          // 같은 서술을 가진 항목은 보기에서 제외
+  const self = norm(item.name);
+  const picks = [];
+  const push = arr => { for(const i of shuffle(arr.filter(x=>!owners.has(x.id) && norm(x.name)!==self))){
+      if(!picks.some(p=>norm(p.name)===norm(i.name))){ picks.push(i); if(picks.length>=4) return; } } };
+  for (const tier of tiers(item)){ if(picks.length<4) push(tier); }
+  const opts = shuffle([{name:item.name, ok:true},
+                        ...picks.map(i=>({name:i.name, ok:false}))]);
+  return {clue, opts};
+}
+
+/* 설명 고르기: 오답 보기는 헷갈리는 짝 → 같은 갈래 → 같은 영역 → 전체 순으로 길어온다.
+ * 정답 항목이 실제로 가진 서술과 겹치는 문구는 뺀다 (답이 둘이 되지 않도록). */
+function buildChoices(item){
+  const all = feats(item);
+  const mine = new Set(all.map(norm));
+  const answer = all[Math.random()*all.length|0];
+  const self = norm(item.name);
+  const take = arr => arr.filter(i=>i.id!==item.id && norm(i.name)!==self)
+                        .flatMap(i=>feats(i).map(f=>({f, from:i.name})))
+                        .filter(o=>!mine.has(norm(o.f)));
+  const seen = new Set([norm(answer)]);
+  const picks = [];
+  const push = arr => { for(const o of arr){ const k=norm(o.f);
+      if(!seen.has(k)){ seen.add(k); picks.push(o); if(picks.length>=4) return; } } };
+  for (const tier of tiers(item)){ if(picks.length<4) push(shuffle(take(tier))); }
+  const opts = shuffle([{f:answer, from:item.name, ok:true}, ...picks.map(o=>({...o, ok:false}))]);
+  return {opts};
+}
+
+/* ---------- 문제 화면 ---------- */
+function rulerHTML(){
+  const n = quiz.qs.length, at = quiz.at;
+  if(n > 40){
+    return `<div class="ruler"><s class="d" style="flex-grow:${at}"></s><s style="flex-grow:${n-at}"></s></div>`;
+  }
+  let out = "";
+  for(let i=0;i<n;i++) out += `<s class="${i<at?"d":i===at?"c":""}"></s>`;
+  return `<div class="ruler">${out}</div>`;
+}
+function headHTML(){
+  const pad = String(quiz.at+1).padStart(2,"0");
+  return `${rulerHTML()}
+    <div class="meta"><span>${pad} / ${quiz.qs.length}${quiz.review?" · 오답":""}</span>
+      <em>정답 <b>${quiz.right}</b></em></div>`;
+}
+const catHead = (it, extra) => `<div class="sec" style="margin-bottom:14px">
+  <span>${esc(UNITOF[it.category].no)} ${esc(CATLABEL[it.category])}</span><i></i>${extra||""}</div>`;
+
+function mediaHTML(item){
+  const m = MEDIA_[item.media];
+  const marker = item.marker ? `<div class="marker" style="left:${item.marker.x}%;top:${item.marker.y}%"></div>` : "";
+  return `
+    <div class="sec" style="margin-bottom:8px"><span>${esc(m.title)}</span><i></i>
+      ${m.labeled?`<em>${item.num}번</em>`:""}</div>
+    <div class="mapbox"><div style="position:relative;width:${zoom}%">
+      <img src="${m.image}" alt="${esc(m.title)}">${marker}
+    </div><u class="tl"></u><u class="br"></u></div>
+    <div class="zoom"><button data-z="-">축소</button><button data-z="+">확대</button><button data-z="0">원래대로</button></div>`;
+}
+
+let zoom = 100;
+function render(){
+  const q = quiz.qs[quiz.at], it = q.item;
+  if (q.type === "rfeat")  return renderReverse(q);
+  if (q.type === "ox")     return renderOX(q);
+  if (q.type === "recall") return renderRecall(q);
+  if (q.type === "write")  return renderWrite(q);
+  return renderChoices(q);
+}
+
+function renderWrite(q){
+  const it = q.item, kind = kindOf(it.category);
+  const media = hasMedia(it);
+  const labeled = media && MEDIA_[it.media].labeled;
+  const ask = media
+    ? (labeled ? `그림에서 <em>${it.num}번</em>으로<br>표시된 ${esc(kind)}의 이름은?`
+               : `그림에 <em>표시된</em><br>${esc(kind)}의 이름은?`)
+    : `다음 설명에 해당하는<br>${esc(kind)}의 이름을 <em>쓰세요</em>`;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  ${media ? `<div class="block">${mediaHTML(it)}</div>` : ""}
+  <div class="block">
+    ${media ? "" : catHead(it)}
+    <div class="q">
+      ${labeled?`<span class="badge">${it.num}</span>`:""}
+      <h2>${ask}</h2>
+    </div>
+    ${q.clue ? `<div class="clue">${esc(q.clue)}</div>` : ""}
+  </div>
+  <div class="block">
+    <div class="blank" id="blank">
+      <input type="text" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false"
+             placeholder="이름을 입력하세요">
+    </div>
+    <div class="hintrow"><span>${esc(SUBJECT.writeHint || "괄호·띄어쓰기는 무시합니다")}</span><em>ENTER</em></div>
+  </div>
+  <div class="actions side">
+    <button class="btn2" id="skip">모르겠음</button>
+    <button class="btn" id="sub">제출</button>
+  </div>`;
+  const input = document.getElementById("ans");
+  input.focus();
+  const submit = ()=>answerName(input.value);
+  input.onkeydown = e => {
+    if(e.key !== "Enter") return;
+    if(e.isComposing || e.keyCode === 229) return;   // 한글 조합을 확정하는 Enter는 흘려보냄
+    e.preventDefault();
+    e.stopPropagation();                              // 이 Enter가 '다음 문제'까지 누르지 않도록
+    submit();
+  };
+  document.getElementById("sub").onclick = submit;
+  document.getElementById("skip").onclick = ()=>answerName("");
+  bindZoom();
+}
+
+function renderChoices(q){
+  const it = q.item;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    ${catHead(it, numOf(it))}
+    <div class="q"><h2><mark>${esc(it.name)}</mark>에 대한 ${esc(whatOf(it.category))}${
+      josa(whatOf(it.category),"으로","로")}<br>옳은 것은?</h2></div>
+  </div>
+  <div class="opts" id="opts">
+    ${q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><b>${i+1}</b><span>${esc(o.f)}</span></button>`).join("")}
+  </div>`;
+  document.getElementById("opts").onclick = e=>{
+    const b = e.target.closest(".opt"); if(b) answerFeat(+b.dataset.i);
+  };
+  document.onkeydown = e=>{ if(/^[1-5]$/.test(e.key)) answerFeat(+e.key-1); };
+}
+
+function renderReverse(q){
+  const it = q.item, kind = kindOf(it.category);
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    ${catHead(it)}
+    <div class="q"><h2>다음 설명에 해당하는 ${esc(kind)}${josa(kind,"은","는")}?</h2></div>
+    <div class="clue">${esc(q.clue)}</div>
+  </div>
+  <div class="opts" id="opts">
+    ${q.opts.map((o,i)=>`<button class="opt name" data-i="${i}"><b>${i+1}</b><span>${esc(o.name)}</span></button>`).join("")}
+  </div>`;
+  document.getElementById("opts").onclick = e=>{
+    const b = e.target.closest(".opt"); if(b) answerReverse(+b.dataset.i);
+  };
+  document.onkeydown = e=>{ if(/^[1-5]$/.test(e.key)) answerReverse(+e.key-1); };
+}
+
+function renderOX(q){
+  const it = q.item;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    ${catHead(it)}
+    <div class="q"><h2>다음 자료의 설명이<br><em>옳은지</em> 판단하세요</h2></div>
+    <div class="card" style="margin-top:14px">
+      <div class="who">${esc(it.name)}<em>O · X</em></div>
+      <div class="stmt">${esc(q.stmt)}</div>
+    </div>
+    <div class="hintrow" style="margin-top:10px"><span>키보드 O / X 또는 1 / 2</span><em>O·X</em></div>
+  </div>
+  <div class="actions oxrow">
+    <button class="btn verm" id="oxno">✗ 틀림<small>X</small></button>
+    <button class="btn moss" id="oxyes">✓ 옳음<small>O</small></button>
+  </div>`;
+  document.getElementById("oxyes").onclick = ()=>answerOX(true);
+  document.getElementById("oxno").onclick  = ()=>answerOX(false);
+  document.onkeydown = e=>{
+    if(e.isComposing) return;
+    const k = e.key.toLowerCase();
+    if(k==="o" || k==="1") answerOX(true);
+    if(k==="x" || k==="2") answerOX(false);
+  };
+}
+
+function answerOX(said){
+  const q = quiz.qs[quiz.at], it = q.item;
+  if(q.answered) return;
+  q.answered = true;
+  document.onkeydown = null;
+  const ok = (said === q.truth);
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine: said?"옳음":"틀림", type:"O·X"});
+  document.getElementById("oxyes").disabled = true;
+  document.getElementById("oxno").disabled  = true;
+
+  const why = q.truth
+    ? `이 설명은 <b>${esc(it.name)}</b>의 ${esc(whatOf(it.category))}으로 학습 자료에 나온 문장입니다.`
+    : `이 설명은 <b>${esc(it.name)}</b>${josa(it.name,"이","가")} 아니라 <b>${esc(q.owner)}</b>의 것입니다.`;
+  app.insertAdjacentHTML("beforeend", `
+    <div class="block" style="margin-top:22px">
+      <div class="oxjudge ${ok?"ok":"no"}">
+        ${ok?"맞혔습니다":"틀렸습니다"} · 정답은 <b>${q.truth?"옳음(O)":"틀림(X)"}</b><br>${why}
+      </div>
+      ${allFeatHTML(it)}
+    </div>
+    ${nextBtn()}`);
+  wireNext();
+}
+
+function renderRecall(q){
+  const it = q.item;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    ${catHead(it, numOf(it))}
+    <div class="recall">
+      <div class="nm">${esc(it.name)}</div>
+      <div class="ask">이 ${esc(kindOf(it.category))}의 ${esc(whatOf(it.category))}${josa(whatOf(it.category),"을","를")} 떠올려 보세요<br>
+        <em>${feats(it).length}가지</em></div>
+    </div>
+  </div>
+  <div class="actions"><button class="btn" id="show">설명 보기<small>ENTER</small></button></div>`;
+  const show = ()=>revealRecall(q);
+  document.getElementById("show").onclick = show;
+  document.onkeydown = e=>{ if(e.key==="Enter" && !e.isComposing){ e.preventDefault(); show(); } };
+}
+
+function revealRecall(q){
+  const it = q.item;
+  document.onkeydown = null;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    ${catHead(it)}
+    <div class="recall"><div class="nm">${esc(it.name)}</div></div>
+  </div>
+  <div class="block">
+    <div class="ans">
+      <div class="feats"><lbl>${esc((whatOf(it.category)).toUpperCase())}</lbl>
+        <div class="stack" style="gap:7px">${featList(it)}</div></div>
+    </div>
+  </div>
+  <div class="actions side">
+    <button class="btn2 verm" id="miss">못 떠올림</button>
+    <button class="btn" id="got">다 떠올림</button>
+  </div>`;
+  const done = ok => {
+    record(it, ok);
+    if(ok) quiz.right++;
+    quiz.log.push({item:it, ok, mine: ok?"떠올림":"못 떠올림", type:"떠올리기"});
+    quiz.at++; document.onkeydown = null;
+    quiz.at < quiz.qs.length ? render() : result();
+  };
+  document.getElementById("got").onclick  = ()=>done(true);
+  document.getElementById("miss").onclick = ()=>done(false);
+  document.onkeydown = e=>{
+    if(e.isComposing) return;
+    if(e.key==="Enter"){ e.preventDefault(); done(true); }
+    if(e.key==="Backspace"){ e.preventDefault(); done(false); }
+  };
+}
+
+function bindZoom(){
+  const row = document.querySelector(".zoom"); if(!row) return;
+  row.onclick = e=>{
+    const b = e.target.closest("button"); if(!b) return;
+    zoom = b.dataset.z==="+" ? Math.min(zoom+50, 400) : b.dataset.z==="-" ? Math.max(zoom-50, 100) : 100;
+    const inner = document.querySelector(".mapbox > div");
+    if(inner) inner.style.width = zoom + "%";
+  };
+}
+
+function record(item, ok){
+  const s = stat(item.id);
+  if(ok){ s.right++; s.streak++; } else { s.wrong++; s.streak = 0; }
+  s.last = Date.now(); save();
+}
+const featList = it => feats(it).map(f=>`<div class="feat"><i></i><span>${esc(f)}</span></div>`).join("");
+const allFeatHTML = it => feats(it).length ? `
+  <div class="allfeat" style="margin-top:14px">
+    <lbl>${esc(it.name)} · 전체 ${esc(whatOf(it.category))}</lbl>
+    <div class="stack" style="gap:6px">${feats(it).map(f=>
+      `<div style="font-size:14px;line-height:1.5">${esc(f)}</div>`).join("")}</div>
+  </div>` : "";
+
+function answerName(val){
+  const q = quiz.qs[quiz.at], it = q.item;
+  const verdict = judge(val, it);
+  const ok = verdict !== null;
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine: val || "(미입력)", type:"서답형"});
+
+  const blank = document.getElementById("blank");
+  blank.classList.add(ok?"ok":"no");
+  blank.insertAdjacentHTML("beforeend",
+    `<span class="verdict" style="color:var(--${ok?"moss":"verm"})">${ok?(verdict==="typo"?"정답 · 오타":"정답"):"오답"}</span>`);
+  document.getElementById("ans").disabled = true;
+
+  app.insertAdjacentHTML("beforeend", `
+    <div class="block" style="margin-top:22px">
+      <div class="ans ${ok?"":"no"}">
+        <div class="top" ${feats(it).length?"":'style="border-bottom:0"'}>
+          <lbl>ANSWER</lbl>
+          <div><span class="name">${esc(it.name)}</span>${
+            it.aliases && it.aliases.length ? `<span class="alias">${esc(it.aliases.join(" / "))}</span>` : ""}</div>
+          ${val ? `<div class="mine">내 답 · <b>${esc(val)}</b></div>` : ""}
+        </div>
+        ${feats(it).length ? `<div class="feats"><lbl>${esc((whatOf(it.category)).toUpperCase())}</lbl>
+          <div class="stack" style="gap:7px">${featList(it)}</div></div>` : ""}
+      </div>
+    </div>
+    ${nextBtn()}`);
+  document.getElementById("sub").disabled = true;
+  document.getElementById("skip").disabled = true;
+  wireNext();
+}
+
+function answerFeat(idx){
+  const q = quiz.qs[quiz.at], it = q.item;
+  if(!q.opts || q.opts[idx]===undefined || q.answered) return;
+  q.answered = true;
+  document.onkeydown = null;
+  const ok = q.opts[idx].ok;
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine:q.opts[idx].f, type:"5지선다"});
+  document.querySelectorAll(".opt").forEach((b,i)=>{
+    b.disabled = true;
+    if(q.opts[i].ok){ b.classList.add("correct"); b.insertAdjacentHTML("beforeend", `<em>정답</em>`); }
+    else if(i===idx){ b.classList.add("wrong"); b.insertAdjacentHTML("beforeend", `<em>내 답</em>`); }
+    else b.insertAdjacentHTML("beforeend", `<em>${esc(q.opts[i].from)}</em>`);
+  });
+  app.insertAdjacentHTML("beforeend",
+    `<div class="block" style="margin-top:22px">${allFeatHTML(it)}</div>${nextBtn()}`);
+  wireNext();
+}
+
+function answerReverse(idx){
+  const q = quiz.qs[quiz.at], it = q.item;
+  if(!q.opts || q.opts[idx]===undefined || q.answered) return;
+  q.answered = true;
+  document.onkeydown = null;
+  const ok = q.opts[idx].ok;
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine:q.opts[idx].name, type:"설명→이름"});
+  document.querySelectorAll(".opt").forEach((b,i)=>{
+    b.disabled = true;
+    if(q.opts[i].ok){ b.classList.add("correct"); b.insertAdjacentHTML("beforeend", `<em>정답</em>`); }
+    else if(i===idx){ b.classList.add("wrong"); b.insertAdjacentHTML("beforeend", `<em>내 답</em>`); }
+  });
+  app.insertAdjacentHTML("beforeend",
+    `<div class="block" style="margin-top:22px">${allFeatHTML(it)}</div>${nextBtn()}`);
+  wireNext();
+}
+
+const nextBtn = () => `<button class="btn ink" id="next">${
+  quiz.at+1 < quiz.qs.length ? "다음 문제" : "결과 보기"}<small>ENTER</small></button>`;
+
+function wireNext(){
+  const b = document.getElementById("next");
+  b.focus();
+  b.scrollIntoView({block:"nearest", behavior:"smooth"});
+  b.onclick = ()=>{ quiz.at++; document.onkeydown=null; quiz.at<quiz.qs.length ? render() : result(); };
+  document.onkeydown = null;
+  setTimeout(()=>{                                       // 방금 누른 Enter가 이 핸들러에 닿지 않게
+    document.onkeydown = e=>{
+      if(e.key!=="Enter" || e.isComposing || e.keyCode===229) return;
+      e.preventDefault(); b.click();
+    };
+  }, 0);
+}
+
+/* ---------- 결과 ---------- */
+function result(){
+  document.onkeydown = null;
+  const wrong = quiz.log.filter(l=>!l.ok);
+  const rate = Math.round(quiz.right / quiz.qs.length * 100);
+  const byCat = {};
+  quiz.log.forEach(l=>{
+    const k = UNITOF[l.item.category].no + " " + CATLABEL[l.item.category];
+    byCat[k] = byCat[k] || {n:0, r:0};
+    byCat[k].n++; if(l.ok) byCat[k].r++;
+  });
+  app.innerHTML = `
+  <div class="block">
+    <div class="eyebrow">SESSION COMPLETE</div>
+    <div class="score">
+      <div><span class="n">${quiz.right}</span><span class="of">/ ${quiz.qs.length}</span></div>
+      <div class="r"><k>ACCURACY</k><v>${rate}%</v></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="sec"><span>범위별</span><i></i></div>
+    ${Object.entries(byCat).map(([k,v])=>
+      `<div class="lead"><span>${esc(k)}</span><i></i><v class="${v.r===v.n?"full":""}">${v.r} / ${v.n}</v></div>`).join("")}
+  </div>
+
+  ${wrong.length ? `<div class="block">
+    <div class="sec warn"><span>틀린 문제</span><i></i><em>${wrong.length}</em></div>
+    ${wrong.map(l=>`<div class="wrongrow">
+      <div class="l"><div class="nm">${esc(l.item.name)}</div>
+        <div class="ft">${esc(feats(l.item)[0]||"")}</div></div>
+      <div class="r"><k>MINE</k><v>${esc(l.mine)}</v></div>
+    </div>`).join("")}
+  </div>` : `<div class="block center">모두 맞혔습니다.</div>`}
+
+  <div class="stack">
+    ${wrong.length?`<button class="btn verm" id="again">틀린 것만 다시 풀기<small>${wrong.length}</small></button>`:""}
+    <button class="btn2" id="hm">처음으로</button>
+  </div>`;
+  if(wrong.length) document.getElementById("again").onclick = ()=>begin(wrong.map(l=>l.item), true);
+  document.getElementById("hm").onclick = home;
+}
+
+home();
+</script>
+</body>
+</html>
