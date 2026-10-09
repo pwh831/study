@@ -1,0 +1,14 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+.kotlin/
+captures/
+ios/FitWake.xcodeproj/
+ios/FitWake/Info.plist
+ios/build/
+ios/Payload/
+ios/*.ipa
+ios/FitWakeCore/.build/
