@@ -5,7 +5,7 @@
 - 시험지 PDF 67쪽: 일본어 p1-3, (확통 p4-13?), 지역이해 p14-19?, 독서 p20-30?, 현윤 p31-37?, 법과사회 p38-45?, 문학 ~p46, 영어 p47-55, 경제 p56-60?, 독서/문학? p61-67
 
 ## 영어Ⅱ 학생 표시 (시험지 p47-55)
-1:4 2:1 3:2(표시 애매) 4:4 5:1 6:5 7:3 8:4 9:4 10:2 11:5 12:2 13:1 14:3 15:2 16:3 17:?(②④⑤에 X, ??) 18:5 19:5 20:2 21:1
+1:4 2:1 3:2(OMR 확인) 4:4 5:1 6:5 7:3 8:4 9:4 10:2 11:5 12:2 13:1 14:3 15:2 16:3 17:2(OMR 확인) 18:5 19:5 20:2 21:1
 서1 (A) local business owners (B) discourage the influx of visitors (C) reduced profits
 서2 (A) not because a relatively minor change but because (B) remind of us how easily
 서3 (A) bizalle(bizarre 철자?) (B) lifestyles.
