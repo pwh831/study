@@ -1,0 +1,23 @@
+# npx skills 로 설치한 제3자 스킬 — 이 저장소의 산출물이 아니다.
+# 다시 받으려면: npx skills add mattpocock/skills
+.agents/
+skills-lock.json
+
+# .claude/ 는 무시한다. 남겨 두던 범용 스킬(grill-me·grilling·critique·log)은
+# study 저장소의 llm/skills/ 로 옮겼다.
+.claude/
+
+# critique 스킬이 남기는 점검 기록 — 자동 생성물이라 저장소에 쌓지 않는다.
+.devils-advocate/
+
+# npx skills 설치기가 다른 에이전트용으로 만드는 디렉터리.
+# data/ 는 이 프로젝트의 단어 데이터 자리이므로 특히 섞이면 안 된다.
+/agent/
+/data/skills/
+
+# tools/smoke.js 가 쓰는 Playwright. 브라우저는 컨테이너에 이미 있으므로
+# 다시 받을 때는 npm i 만 하면 된다.
+node_modules/
+__pycache__/
+tools/fonts/
+studio/fonts/

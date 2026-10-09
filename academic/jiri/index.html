@@ -1,0 +1,1857 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>지역이해 암기 퀴즈</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%97%BA%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  :root{
+    --paper:#F5F1E8; --card:#FCFAF4; --ink:#1F1B16; --ink2:#5C554A; --faint:#8A8272;
+    --rule:#DCD5C6; --rule2:#C9C1B0;
+    --water:#33596B; --water-d:#1E4353; --water-t:#E7EEF1; --water-m:#5C8296;
+    --moss:#4A6E44;  --moss-t:#EAF0E7;  --moss-l:#B9CBB2;
+    --verm:#B0512C;  --verm-t:#F7EAE3;
+    --sans:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+    --serif:'Gowun Batang','Nanum Myeongjo','AppleMyungjo','Batang',serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body::after{content:'';position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .wrap{max-width:640px;margin:0 auto;padding:26px 22px 46px}
+
+  /* 표제 */
+  .eyebrow{font:500 11px/1 var(--mono);letter-spacing:.22em;color:var(--verm);margin-bottom:9px}
+  h1{font:700 30px/1.2 var(--serif);letter-spacing:-.01em;margin:0 0 6px}
+  .sub{margin:0;font-size:13px;color:var(--ink2)}
+  .dbl{margin-top:16px;border-top:2px solid var(--ink)}
+  .dbl + .dbl{margin-top:2px;border-top-width:1px}
+
+  /* 섹션 머리 */
+  .sec{display:flex;align-items:center;gap:11px;margin:0 0 14px}
+  .sec span:first-child{font:600 11px/1 var(--sans);letter-spacing:.16em;color:var(--ink2)}
+  .sec i{flex-grow:1;height:1px;background:var(--rule2);display:block}
+  .sec em{font:500 11px/1 var(--mono);color:var(--faint);font-style:normal}
+  .sec.warn span:first-child,.sec.warn em{color:var(--verm)}
+  .grp{font:500 11px/1 var(--mono);letter-spacing:.14em;color:var(--faint);margin:0 0 9px}
+  .block{margin-bottom:26px}
+
+  /* 진도 */
+  .stats{display:flex;border:1px solid var(--rule2);background:var(--card)}
+  .stats div{flex-grow:1;flex-basis:0;padding:13px 15px;border-right:1px solid var(--rule)}
+  .stats div:last-child{border-right:0}
+  .stats k{display:block;font:500 10px/1 var(--mono);letter-spacing:.16em;color:var(--faint)}
+  .stats v{display:block;font:700 22px/1.25 var(--serif);margin-top:5px}
+  .stats small{font:400 13px var(--sans);color:var(--faint)}
+
+  /* 대단원 목록 */
+  .areatog{flex:none;min-height:30px;padding:0 11px;border:1px solid var(--rule2);border-radius:2px;
+       background:transparent;color:var(--ink2);font:500 11.5px var(--sans);cursor:pointer}
+  .areatog.on{border-color:var(--water);background:var(--water-t);color:var(--water-d)}
+  .unit{border-bottom:1px solid var(--rule);padding-bottom:0}
+  .unit:first-of-type{border-top:1px solid var(--rule)}
+  .unitrow{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:0 4px;
+       border:0;background:transparent;cursor:pointer;text-align:left;color:var(--ink)}
+  .uno{flex:none;font:500 12px var(--mono);letter-spacing:.06em;color:var(--faint);width:28px}
+  .utitle{flex-grow:1;font:600 15px var(--sans)}
+  .ucount{flex:none;font:500 12px var(--mono);color:var(--faint)}
+  .umark{flex:none;display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--rule2);
+       border-radius:50%;font-size:12px;color:transparent}
+  .unit.on .uno{color:var(--water)}
+  .unit.on .utitle{color:var(--water-d)}
+  .unit.on .ucount{color:var(--water-m)}
+  .unit.on .umark{border-color:var(--water);background:var(--water);color:var(--card)}
+  .unit.part .umark{border-color:var(--water);color:var(--water)}
+  .utitle b.out{display:inline-block;margin-left:8px;padding:1px 6px;border:1px solid var(--rule2);
+       border-radius:2px;font:500 10.5px var(--sans);color:var(--faint);vertical-align:2px}
+  .unit.out .uno,.unit.out .utitle{color:var(--faint)}
+  .unit.out.on .utitle b.out{border-color:var(--verm);color:var(--verm)}
+  .subcats{display:flex;flex-wrap:wrap;gap:6px;padding:0 4px 12px 40px}
+  .subchip{min-height:36px;padding:0 12px;border:1px solid var(--rule2);border-radius:2px;
+       background:transparent;color:var(--ink2);font:500 12.5px var(--sans);cursor:pointer}
+  .subchip n{font:500 10.5px var(--mono);color:var(--faint);margin-left:5px}
+  .subchip.on{border-color:var(--water);background:var(--water-t);color:var(--water-d);font-weight:600}
+  .subchip.on n{color:var(--water-m)}
+  .subchip.out{border-style:dashed;color:var(--faint)}
+  .subchip.out.on{border-style:solid;border-color:var(--verm);color:var(--verm)}
+
+  /* 유형 선택 */
+  .types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .types .chip{min-height:56px;padding:8px 12px;text-align:left;line-height:1.3}
+  .types .chip.wide{grid-column:1 / -1;min-height:46px}
+  .types .chip small{display:block;font:400 11px var(--sans);color:var(--faint);margin-top:2px}
+  .types .chip.on small{color:var(--water-m)}
+
+  /* 특징 → 지명 */
+  .clue{margin-top:14px;border-left:3px solid var(--verm);background:var(--verm-t);
+        padding:14px 16px;font:400 16px/1.6 var(--serif);color:var(--ink)}
+  .opt.name span{font:600 16px var(--sans)}
+
+  /* 헷갈리는 짝 */
+  .trap{border:1px solid var(--verm);background:var(--verm-t);padding:13px 15px}
+  .trap lbl{display:block;font:600 10.5px/1 var(--sans);letter-spacing:.1em;
+       color:var(--verm);margin-bottom:7px}
+  .trap .tw{font-size:13.5px;line-height:1.6;color:var(--ink)}
+
+  /* 보기 조합 (ㄱㄴㄷㄹ) */
+  .bogi{border:1px solid var(--rule2);background:var(--card);margin-top:14px}
+  .bogi .bhead{padding:7px 14px;border-bottom:1px solid var(--rule2);
+       font:500 10px var(--mono);letter-spacing:.18em;color:var(--faint)}
+  .bogi .bitem{display:flex;gap:11px;padding:11px 14px;align-items:flex-start}
+  .bogi .bitem + .bitem{border-top:1px dotted var(--rule)}
+  .bogi .bk{flex:none;font:600 14px var(--sans);color:var(--ink2);width:16px}
+  .bogi .bt{flex-grow:1;font-size:14.5px;line-height:1.5}
+  .bogi .bitem.t .bk{color:var(--moss)} .bogi .bitem.f .bk{color:var(--verm)}
+  .bogi .bitem.t{background:var(--moss-t)} .bogi .bitem.f{background:var(--verm-t)}
+  .bogi .bwhy{font-size:12px;color:var(--verm);margin-top:4px}
+  .opt.pair span{font:600 16px var(--sans);letter-spacing:.1em}
+
+  /* 오류 찾기 표 */
+  .tbl{border:1px solid var(--ink);background:var(--card);margin-top:14px}
+  .tbl .trow{display:flex;gap:10px;padding:11px 13px;align-items:flex-start}
+  .tbl .trow + .trow{border-top:1px solid var(--rule)}
+  .tbl .tn{flex:none;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;
+       border:1.5px solid var(--rule2);font:500 11px var(--mono);color:var(--ink2);margin-top:1px}
+  .tbl .tk{flex:none;width:76px;font:700 14px var(--serif)}
+  .tbl .tv{flex-grow:1;font-size:13.5px;line-height:1.5;color:var(--ink2)}
+  .tbl .trow.bad{background:var(--verm-t)}
+  .tbl .trow.bad .tn{border-color:var(--verm);background:var(--verm);color:var(--card)}
+  .tbl .trow.bad .tv{color:var(--verm)}
+
+  /* 공통점 */
+  .trio{display:flex;gap:8px;margin-top:14px}
+  .trio div{flex:1;border:1px solid var(--rule2);background:var(--card);padding:15px 8px;
+       text-align:center;font:700 17px var(--serif);letter-spacing:-.01em}
+
+  /* O·X 판별 */
+  .card{border:1px solid var(--rule2);background:var(--card)}
+  .card .who{padding:11px 16px;border-bottom:1px solid var(--rule2);
+        font:700 17px var(--serif);letter-spacing:-.01em}
+  .card .who em{float:right;font:400 11px var(--mono);font-style:normal;color:var(--faint);
+        line-height:1.9;letter-spacing:.06em}
+  .card .stmt{padding:18px 16px;font:400 16px/1.65 var(--serif);color:var(--ink)}
+  .oxrow{display:flex;gap:9px}
+  .oxrow .btn{flex:1}
+  .btn.moss{background:var(--moss)}
+  .oxjudge{margin-top:14px;padding:13px 16px;border-left:3px solid var(--rule2);
+        background:var(--card);font-size:13.5px;line-height:1.7;color:var(--ink2)}
+  .oxjudge b{color:var(--ink);font-weight:700}
+  .oxjudge.ok{border-left-color:var(--moss)}
+  .oxjudge.no{border-left-color:var(--verm)}
+
+  /* 특징 떠올리기 */
+  .recall{border:1px solid var(--rule2);background:var(--card);padding:26px 20px;text-align:center}
+  .recall .nm{font:700 31px/1.25 var(--serif);letter-spacing:-.01em}
+  .recall .ask{margin-top:11px;font-size:13.5px;color:var(--ink2);line-height:1.7}
+  .recall .ask em{font:500 12px var(--mono);font-style:normal;color:var(--verm)}
+
+  /* 칩·버튼 */
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{min-height:44px;padding:0 15px;border:1px solid var(--rule2);border-radius:2px;
+        background:transparent;color:var(--ink2);font:500 13.5px var(--sans);cursor:pointer}
+  .chip n{font:500 11px var(--mono);color:var(--faint);margin-left:6px}
+  .chip.on{border:1.5px solid var(--water);background:var(--water-t);color:var(--water-d);font-weight:600}
+  .chip.on n{color:var(--water-m)}
+  .grid{display:grid;gap:7px}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .grid .chip{padding:0 8px}
+  .grid .chip.on{border:1.5px solid var(--ink);background:var(--ink);color:var(--card)}
+  .grid .chip.on n{color:var(--rule2)}
+  .mono{font-family:var(--mono)}
+
+  .btn{min-height:56px;width:100%;border:0;border-radius:2px;background:var(--water);
+       color:var(--card);font:700 16px var(--sans);letter-spacing:.02em;cursor:pointer}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.ink{background:var(--ink)}
+  .btn.verm{background:var(--verm)}
+  .btn small{font:500 12px var(--mono);opacity:.7;margin-left:9px}
+  .btn2{min-height:48px;width:100%;border:1px solid var(--rule2);border-radius:2px;
+        background:transparent;color:var(--ink2);font:500 14px var(--sans);cursor:pointer}
+  .btn2.verm{border-color:var(--verm);color:var(--verm);font-weight:600}
+  .stack{display:flex;flex-direction:column;gap:9px}
+  /* 화면 아래 고정 — 범위 목록이 길어 시작 버튼이 접힘 아래로 밀리는 것 방지 */
+  .actions{position:sticky;bottom:0;z-index:5;margin:14px -22px 0;
+       padding:12px 22px calc(14px + env(safe-area-inset-bottom,0px));
+       background:var(--paper);border-top:1px solid var(--rule2)}
+  .side{display:flex;gap:9px}
+  .side .btn2{flex:1}.side .btn{flex:2}
+
+  /* 진행 눈금 */
+  .ruler{display:flex;gap:2px;align-items:flex-end;height:9px}
+  .ruler s{flex-grow:1;height:5px;background:var(--rule);text-decoration:none}
+  .ruler s.d{background:var(--ink)}
+  .ruler s.c{background:var(--verm);height:9px}
+  .meta{display:flex;justify-content:space-between;align-items:baseline;
+        font:500 12px var(--mono);letter-spacing:.08em;color:var(--ink2);margin-top:9px}
+  .meta em{color:var(--faint);font-style:normal}
+  .meta b{color:var(--moss);font-weight:500}
+
+  /* 지도 */
+  .mapbox{border:1px solid var(--ink);background:var(--card);padding:10px;position:relative;
+          overflow:auto;max-height:46vh}
+  .mapbox img{display:block;width:100%;min-width:320px;mix-blend-mode:multiply}
+  .mapbox u{position:absolute;width:9px;height:9px;text-decoration:none}
+  .mapbox u.tl{left:4px;top:4px;border-left:1.5px solid var(--verm);border-top:1.5px solid var(--verm)}
+  .mapbox u.br{right:4px;bottom:4px;border-right:1.5px solid var(--verm);border-bottom:1.5px solid var(--verm)}
+  .marker{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;
+          border:2px solid var(--verm);box-shadow:0 0 0 3px rgba(176,81,44,.18);
+          animation:pulse 1.4s infinite;pointer-events:none;mix-blend-mode:normal}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(176,81,44,.18)}50%{box-shadow:0 0 0 9px rgba(176,81,44,0)}}
+  .zoom{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+  .zoom button{min-height:34px;padding:0 12px;border:1px solid var(--rule2);border-radius:2px;
+       background:transparent;font:500 12px var(--sans);color:var(--ink2);cursor:pointer}
+
+  /* 문제 */
+  .q{display:flex;align-items:flex-start;gap:12px}
+  .badge{flex:none;display:grid;place-items:center;width:38px;height:38px;border:2px solid var(--verm);
+         border-radius:50%;font:500 18px var(--mono);color:var(--verm);margin-top:2px}
+  .q h2{margin:0;font:700 21px/1.45 var(--serif);letter-spacing:-.01em}
+  .q h2 em{font-style:normal;color:var(--verm)}
+  .q h2 mark{background:none;box-shadow:inset 0 -9px 0 var(--verm-t);color:inherit}
+
+  /* 서답형 빈칸 */
+  .blank{border-bottom:2px solid var(--ink);padding:6px 2px 9px;
+       display:flex;align-items:baseline;gap:12px}
+  .blank input{flex-grow:1;min-width:0;border:0;background:transparent;outline:none;padding:0;
+       font:700 23px/1.3 var(--serif);color:var(--ink)}
+  .blank input::placeholder{color:#B8B0A0;font-weight:400}
+  .blank.ok{border-bottom-color:var(--moss)}
+  .blank.no{border-bottom-color:var(--verm)}
+  .blank .verdict{flex:none;font:600 12px var(--sans);letter-spacing:.06em}
+  .hintrow{display:flex;justify-content:space-between;margin-top:9px;font-size:12px;color:var(--faint)}
+  .hintrow em{font:500 11px var(--mono);font-style:normal}
+
+  /* 보기 */
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{display:flex;gap:11px;align-items:flex-start;text-align:left;width:100%;min-height:56px;
+       padding:13px;border:1.5px solid var(--rule2);border-radius:2px;background:transparent;cursor:pointer}
+  .opt b{flex:none;display:grid;place-items:center;width:24px;height:24px;border:1.5px solid var(--rule2);
+         border-radius:50%;font:500 12px var(--mono);color:var(--ink2);background:transparent}
+  .opt span{flex-grow:1;font:400 14.5px/1.5 var(--sans);color:var(--ink)}
+  .opt em{flex:none;align-self:center;font:500 11px var(--mono);color:var(--faint);font-style:normal}
+  .opt.correct{border-color:var(--moss);background:var(--moss-t)}
+  .opt.correct b{border-color:var(--moss);background:var(--moss);color:var(--card)}
+  .opt.wrong{border-color:var(--verm);background:var(--verm-t)}
+  .opt.wrong b{border-color:var(--verm);background:var(--verm);color:var(--card)}
+  .opt.correct em,.opt.wrong em{font-family:var(--sans);font-weight:600;letter-spacing:.06em}
+  .opt.correct em{color:var(--moss)}.opt.wrong em{color:var(--verm)}
+  .opt:disabled{cursor:default}
+
+  /* 정답 카드 */
+  .ans{border:1px solid var(--moss);background:var(--moss-t)}
+  .ans.no{border-color:var(--verm);background:var(--verm-t)}
+  .ans .top{padding:15px 16px 13px;border-bottom:1px dashed var(--moss-l)}
+  .ans.no .top{border-bottom-color:#E0BFB0}
+  .ans lbl{display:block;font:500 10px/1 var(--mono);letter-spacing:.18em;color:var(--moss);margin-bottom:7px}
+  .ans.no lbl{color:var(--verm)}
+  .ans .name{font:700 25px/1.2 var(--serif)}
+  .ans .alias{font-size:12px;color:var(--ink2);border:1px solid var(--moss-l);padding:2px 7px;margin-left:8px;
+       display:inline-block;vertical-align:3px}
+  .ans.no .alias{border-color:#E0BFB0}
+  .ans .mine{font-size:12.5px;color:var(--ink2);margin-top:6px}
+  .ans .mine b{color:var(--verm);font-weight:500}
+  .ans .feats{padding:14px 16px 16px}
+  .feat{display:flex;gap:9px}
+  .feat i{flex:none;width:4px;height:4px;background:var(--moss);margin-top:9px;display:block}
+  .ans.no .feat i{background:var(--verm)}
+  .feat span{font-size:14.5px;line-height:1.5}
+  .allfeat{border-left:2px solid var(--ink);padding:2px 0 2px 14px}
+  .allfeat lbl{display:block;font:500 10px/1 var(--mono);letter-spacing:.18em;color:var(--faint);margin-bottom:9px}
+
+  /* 결과 */
+  .score{border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:22px 0 20px;
+         display:flex;align-items:flex-end;justify-content:space-between}
+  .score .n{font:700 56px/1 var(--serif);letter-spacing:-.02em}
+  .score .of{font:400 24px/1 var(--serif);color:var(--faint);margin-left:4px}
+  .score .r{text-align:right}
+  .score .r k{display:block;font:500 10px var(--mono);letter-spacing:.16em;color:var(--faint)}
+  .score .r v{display:block;font:700 26px/1.2 var(--serif);color:var(--moss);margin-top:3px}
+  .lead{display:flex;align-items:baseline;gap:8px;padding:9px 0;border-bottom:1px dotted var(--rule2)}
+  .lead i{flex-grow:1;border-bottom:1px dotted var(--rule2);transform:translateY(-3px);display:block}
+  .lead v{font:500 13px var(--mono);color:var(--ink2)}
+  .lead v.full{color:var(--moss)}
+  .wrongrow{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .wrongrow .l{flex-grow:1}
+  .wrongrow .nm{font:700 16px/1.3 var(--serif)}
+  .wrongrow .ft{font-size:12.5px;color:var(--ink2);margin-top:3px}
+  .wrongrow .r{flex:none;text-align:right}
+  .wrongrow .r k{display:block;font:500 10px var(--mono);letter-spacing:.12em;color:var(--faint)}
+  .wrongrow .r v{display:block;font-size:13px;color:var(--verm);margin-top:3px}
+  .center{text-align:center;color:var(--ink2);font-size:14px;padding:8px 0}
+
+  /* 빼기 */
+  .meta .mr{display:flex;align-items:baseline;gap:12px}
+  .exbtn{border:1px solid var(--rule2);border-radius:2px;background:transparent;color:var(--faint);
+       font:500 11px var(--sans);padding:3px 8px;cursor:pointer;letter-spacing:0}
+  .exbtn:hover{border-color:var(--verm);color:var(--verm)}
+  .xmodal{position:fixed;inset:0;z-index:50;background:rgba(31,27,22,.42);display:flex;align-items:flex-end;justify-content:center}
+  .xmodal .box{width:100%;max-width:640px;background:var(--paper);border-top:2px solid var(--ink);
+       padding:18px 20px calc(18px + env(safe-area-inset-bottom,0px))}
+  .xmodal h3{margin:0 0 6px;font:700 17px var(--serif)}
+  .xmodal p{margin:0 0 12px;font-size:13px;line-height:1.6;color:var(--ink2)}
+  .xmodal q{display:block;margin:0 0 14px;padding:10px 12px;border-left:3px solid var(--verm);background:var(--verm-t);
+       font:400 14px/1.55 var(--serif);color:var(--ink);quotes:none}
+  .xmodal .opt2{display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px 14px;min-height:52px;
+       border:1.5px solid var(--rule2);border-radius:2px;background:var(--card);cursor:pointer;color:var(--ink)}
+  .xmodal .opt2 b{display:block;font:600 14.5px var(--sans)}
+  .xmodal .opt2 small{display:block;font:400 12px var(--sans);color:var(--faint);margin-top:2px}
+  .xmodal .opt2:hover{border-color:var(--verm)}
+  .exb{border-bottom:1.5px dashed var(--rule2);color:var(--ink2);padding:0 2px}
+  .abx{min-height:30px;min-width:34px;margin:0 4px 4px 0;padding:0 8px;border:1px solid var(--rule2);border-radius:2px;
+       background:transparent;font:600 13px var(--sans);color:var(--ink2);cursor:pointer}
+  .abx.on{border-color:var(--verm);background:var(--verm-t);color:var(--verm);text-decoration:line-through}
+  .xrow{display:flex;gap:10px;align-items:flex-start;padding:10px 2px;border-bottom:1px solid var(--rule)}
+  .xrow .l{flex-grow:1;font-size:13.5px;line-height:1.5}
+  .xrow .l small{display:block;font:500 11px var(--mono);color:var(--faint);margin-bottom:2px}
+  .xrow button{flex:none}
+
+  /* 학습지 전수 점검 */
+  .sheetgo{display:flex;align-items:center;gap:12px;width:100%;padding:14px 15px;text-align:left;cursor:pointer;
+       border:1.5px solid var(--ink);border-radius:2px;background:var(--card);color:var(--ink)}
+  .sheetgo .t{flex-grow:1;font:700 16px var(--serif)}
+  .sheetgo .t small{display:block;font:400 12px var(--sans);color:var(--ink2);margin-top:3px}
+  .sheetgo .p{flex:none;font:500 12px var(--mono);color:var(--water)}
+  .srow{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--rule);padding:10px 4px}
+  .srow:first-of-type{border-top:1px solid var(--rule)}
+  .srow .go{flex-grow:1;display:flex;align-items:center;gap:12px;border:0;background:transparent;
+       cursor:pointer;text-align:left;color:var(--ink);padding:4px 0;min-height:44px}
+  .srow .go .uno{width:28px}
+  .srow .go b{display:block;font:600 15px var(--sans)}
+  .srow .go small{display:block;font:500 11.5px var(--mono);color:var(--faint);margin-top:3px}
+  .srow .go small em{font-style:normal;color:var(--moss)}
+  .srow .bar{height:3px;background:var(--rule);margin-top:6px;position:relative}
+  .srow .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--water)}
+  .srow{flex-wrap:wrap}
+  .srow .head{flex:1 1 100%;display:flex;align-items:baseline;gap:12px;padding:2px 0 8px}
+  .srow .head b{font:600 15px var(--sans)}
+  .srow .head small{margin-left:auto;font:500 11px var(--mono);color:var(--faint)}
+  .parts{flex:1 1 100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding-left:40px}
+  .pbtn{min-height:58px;padding:7px 9px;border:1px solid var(--rule2);border-radius:2px;background:transparent;
+       cursor:pointer;text-align:left;color:var(--ink);position:relative;overflow:hidden}
+  .pbtn:disabled{opacity:.4;cursor:default}
+  .pbtn .pk{font:700 11px var(--mono);color:var(--verm)}
+  .pbtn .pl{display:block;font:600 12.5px var(--sans);margin-top:1px}
+  .pbtn .pn{display:block;font:500 10.5px var(--mono);color:var(--faint);margin-top:3px}
+  .pbtn .pn em{font-style:normal;color:var(--moss)}
+  .pbtn i{position:absolute;left:0;bottom:0;height:3px;background:var(--water)}
+  .pbtn .rd{position:absolute;right:5px;top:5px;font:600 10.5px var(--sans);color:var(--verm)}
+  .rcl{list-style:none;margin:10px 0 0;padding:0}
+  .rcl li{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;border-top:1px dotted var(--rule)}
+  .rcl button{flex:none;width:30px;height:30px;border:1.5px solid var(--rule2);border-radius:50%;background:transparent;
+       font:700 13px var(--sans);color:transparent;cursor:pointer}
+  .rcl li.on button{border-color:var(--moss);background:var(--moss);color:var(--card)}
+  .rcl li span{font-size:14px;line-height:1.55;padding-top:4px}
+  .rcl li.on span{color:var(--moss)}
+  .rcl .tg{display:inline-block;font:600 10.5px/1.5 var(--sans);color:var(--verm);border:1px solid var(--verm);
+       border-radius:2px;padding:0 4px;margin-right:5px}
+  .memo{width:100%;min-height:92px;border:1px solid var(--rule2);border-radius:2px;background:#fff;padding:10px;
+       font:400 14px/1.6 var(--sans);color:var(--ink);resize:vertical;outline:none}
+  .memo:focus{border-color:var(--water)}
+  .srow .redo{flex:none;min-height:36px;padding:0 10px;border:1px solid var(--verm);border-radius:2px;
+       background:transparent;color:var(--verm);font:600 12px var(--sans);cursor:pointer}
+  .scard{border:1px solid var(--rule2);background:var(--card);padding:14px 15px 12px}
+  .scard .shead{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .scard .sid{font:500 12px var(--mono);color:var(--verm)}
+  .scard .ttl{font:700 19px/1.3 var(--serif)}
+  .scard .nmrow{flex-grow:1;display:flex;align-items:baseline;gap:8px;border-bottom:2px solid var(--ink);padding:2px 2px 5px}
+  .scard .nmrow input{flex-grow:1;min-width:0;border:0;background:transparent;outline:none;
+       font:700 20px/1.3 var(--serif);color:var(--ink);padding:0}
+  .scard .nmrow input::placeholder{color:#B8B0A0;font-weight:400;font-size:15px}
+  .scard .nmrow.ok{border-bottom-color:var(--moss)} .scard .nmrow.no{border-bottom-color:var(--verm)}
+  .scard .nmrow .v{flex:none;font:600 12px var(--sans)}
+  .sln{position:relative;padding-left:13px;font-size:14.5px;line-height:2.05;color:var(--ink)}
+  .sln + .sln{margin-top:3px;border-top:1px dotted var(--rule);padding-top:3px}
+  .sln::before{content:'';position:absolute;left:1px;top:15px;width:4px;height:4px;background:var(--rule2)}
+  .sln.n{color:var(--ink2);font-size:13.5px}
+  .sln .tg{display:inline-block;font:600 10.5px/1.5 var(--sans);color:var(--verm);border:1px solid var(--verm);
+       border-radius:2px;padding:0 4px;margin-right:5px;vertical-align:1px}
+  .cz{display:inline-block;border:0;border-bottom:1.5px solid var(--ink);border-radius:0;background:var(--water-t);
+       font:600 14.5px var(--sans);color:var(--water-d);padding:1px 4px;margin:0 2px;outline:none;min-width:3.2em;max-width:100%}
+  .cz:focus{background:#fff;border-bottom-color:var(--water)}
+  .czn{font:500 10px var(--mono);color:var(--verm);vertical-align:6px;margin-left:1px}
+  .cz.ok{background:var(--moss-t);border-bottom-color:var(--moss);color:var(--moss)}
+  .cz.no{background:var(--verm-t);border-bottom-color:var(--verm);color:var(--verm);text-decoration:line-through}
+  .fix{font:700 13.5px var(--sans);color:var(--moss);margin:0 3px 0 1px}
+  .sgrade{margin-top:12px;display:flex;justify-content:space-between;align-items:baseline;
+       font:500 12px var(--mono);color:var(--ink2)}
+  .sgrade b{font:700 22px var(--serif);color:var(--ink)}
+  .sgrade b.full{color:var(--moss)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow" id="eyebrow">2026 · 지역 이해</div>
+  <h1>지역이해 암기</h1>
+  <p class="sub">지도에서 지역을 찾고, 개념과 특징을 골라 외웁니다.</p>
+  <div class="dbl"></div><div class="dbl"></div>
+  <div id="app" style="margin-top:26px"></div>
+</div>
+
+<script src="data/items.js"></script>
+<script src="data/sheet.js"></script>
+<script>
+window.onerror = function(msg, src, line, col, err){
+  var box = document.getElementById("app") || document.body;
+  box.innerHTML = '<div style="border:1.5px solid #B0512C;background:#F7EAE3;padding:16px;' +
+    'border-radius:2px;font:400 13px/1.6 sans-serif;color:#1F1B16">' +
+    '<b style="display:block;margin-bottom:6px;color:#B0512C">문제가 생겼습니다</b>' +
+    '<div style="font-family:monospace;font-size:12px;word-break:break-all">' +
+    String(msg) + '<br>(' + line + ':' + col + ')</div>' +
+    '<div style="margin-top:10px;color:#5C554A">이 내용을 그대로 알려주시면 고쳐드리겠습니다.</div></div>';
+};
+
+/* ---------- 저장소 ---------- */
+const LS = "jiri-quiz-v1";
+let store = {};
+try { store = JSON.parse(localStorage.getItem(LS) || "{}"); } catch(e){ store = {}; }
+function stat(id){ return store[id] || (store[id] = {right:0, wrong:0, streak:0, last:0}); }
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(store)); }catch(e){} }
+
+/* 뺀 문제 — 이상한 문제를 브라우저에 기억해 두고 다시 내지 않는다
+ *   s  : 문장(모든 유형에서 뺌)        key = norm(문장)
+ *   t  : 유형 + 항목                   key = 유형|항목 id
+ *   q  : 전수 점검 문항(A 카드·B·C)    key = 카드 id / B 의 k / C id
+ *   ab : 전수 점검 A 의 빈칸 하나      key = 카드 id#빈칸 번호 */
+const XLS = "jiri-exclude-v1";
+let EX = {s:{}, t:{}, q:{}, ab:{}};
+try { EX = Object.assign(EX, JSON.parse(localStorage.getItem(XLS) || "{}")); } catch(e){}
+const xsave = ()=>{ try{ localStorage.setItem(XLS, JSON.stringify(EX)); }catch(e){} };
+const exCount = ()=> ["s","t","q","ab"].reduce((n,k)=>n+Object.keys(EX[k]).length, 0);
+
+/* ---------- 정답 정규화 ---------- */
+const SUFFIX = ["특별자치도","특별자치시","광역시","특별시","자치도","반도","해협","제도","군도",
+                "산맥","고원","분지","평야","도시","시","군","구","도","강","해","호수","호","만","섬","양"];
+function norm(s){
+  s = (s||"").toLowerCase().replace(/\(.*?\)/g,"").replace(/[\s·・,.\-_'"]/g,"");
+  return s;
+}
+function stripSuffix(s){
+  for (const suf of SUFFIX){
+    if (s.length > suf.length && s.endsWith(suf)) return s.slice(0, -suf.length);
+  }
+  return s;
+}
+function lev(a,b){
+  const m=a.length,n=b.length; if(!m) return n; if(!n) return m;
+  let prev=[...Array(n+1).keys()], cur=new Array(n+1);
+  for(let i=1;i<=m;i++){ cur[0]=i;
+    for(let j=1;j<=n;j++) cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    [prev,cur]=[cur,prev];
+  }
+  return prev[n];
+}
+/* 반환: "exact" | "typo" | null */
+function judge(input, item){
+  const got = norm(input);
+  if (!got) return null;
+  const cands = [item.name, ...(item.aliases||[])].map(norm);
+  const all = [...cands, ...cands.map(stripSuffix)];
+  if (all.includes(got) || all.includes(stripSuffix(got))) return "exact";
+  for (const c of all){
+    if (c.length >= 3 && lev(got, c) <= 1) return "typo";
+    if (stripSuffix(got).length >= 3 && lev(stripSuffix(got), stripSuffix(c)) <= 1) return "typo";
+  }
+  return null;
+}
+
+/* ---------- 분류 ---------- */
+const CATLABEL = Object.fromEntries(CATS.map(c=>[c.key,c.label]));
+const UNITOF   = Object.fromEntries(CATS.map(c=>[c.key,UNITS.find(u=>u.id===c.unit)]));
+const KIND = {peninsula:"반도", island:"섬", sea:"바다", lake:"호수", strait:"해협", ocean:"바다",
+              sido:"시·도", sudogwon:"지역", chungcheong:"지역", gangwon:"지역", honam:"지역",
+              term:"용어", tradition:"지방"};
+/* 받침 유무에 따라 조사 선택 (예: 원주시가 / 태백시가 · 광주광역시는) */
+function josa(word, withJong, without){
+  const last = String(word).replace(/[)\s·]+$/,"").slice(-1);
+  const code = last.charCodeAt(0);
+  if(code < 0xAC00 || code > 0xD7A3) return withJong;      // 한글이 아니면 보수적으로
+  return (code - 0xAC00) % 28 === 0 ? without : withJong;
+}
+const isOverview = c => /_ov$/.test(c);
+/* 단원 개관(수도권의 범위와 특색, 강원 지방의 기온 …)은 '주제'가 학습지의 소제목일 뿐이다.
+ * "이 설명은 어느 소제목인가"를 묻는 문제(특징→주제, O·X, 오류 찾기, 공통점)는 내지 않고,
+ * 내용을 묻는 문제(설명으로 옳은 것, 보기 조합, 떠올리기)만 낸다. 오답 보기도 같은 지방의
+ * 다른 소제목이 아니라 다른 지방의 개관에서 가져와 '어느 지방 이야기인가'를 묻게 한다. */
+const isRegionOv = c => /^(sudogwon|chungcheong|gangwon|honam)_ov$/.test(c);
+const OV_NO = ["rfeat","ox","error","common","name"];
+/* 다만 수도권의 시기별 변화(1960년대 ~ 2000년대 이후, 1·2기 신도시)는 시기를 가르는 것 자체가
+ * 학습 내용이라, 이 무리끼리는 서로 오답 보기가 된다. */
+const OV_SERIES = ["ov_sd1","ov_sd2","ov_sd3","ov_sd4","ov_sd5","ov_sd6","ov_sd7"];
+const kindOf  = c => KIND[c] || (isOverview(c) ? "주제" : "지역");
+/* '특징'이라는 말이 안 맞는 갈래가 있다 (용어는 뜻, 개관은 내용) */
+const whatOf  = c => c === "term" ? "뜻과 예" : isOverview(c) ? "내용" : "특징";
+/* 지도가 없는 항목(개념·용어, 전통적 지역 구분)은 '지도 → 지명'으로 낼 수 없다 */
+const hasMap = i => !!(i.map && MAPS[i.map]);
+const numOf  = i => hasMap(i) && MAPS[i.map].labeled ? `<em>${i.num}번</em>` : "";
+const TYPES = [
+  {key:"exam",   label:"기출형",       hint:"실제 시험에 나오는 형식만 섞어서", big:true},
+  {key:"both",   label:"혼합",        hint:"모든 유형을 섞어서", big:true},
+  {key:"name",   label:"지도 → 지명",  hint:"지도 보고 이름 쓰기"},
+  {key:"rfeat",  label:"특징 → 지명",  hint:"설명 보고 지역 맞히기"},
+  {key:"combo",  label:"보기 조합",    hint:"ㄱㄴㄷㄹ 중 옳은 것만"},
+  {key:"error",  label:"오류 찾기",    hint:"표에서 틀린 줄 고르기"},
+  {key:"common", label:"공통점",       hint:"여러 지역을 묶는 속성"},
+  {key:"ox",     label:"O·X 판별",     hint:"서술이 맞는지 가려내기"},
+  {key:"feat",   label:"지명 → 특징",  hint:"특징 고르기"},
+  {key:"recall", label:"특징 떠올리기", hint:"보지 않고 떠올린 뒤 확인"}
+];
+/* 기출이 실제로 묻는 형식. 특징을 '떠올리는' 문제는 기출에 없어 뺐다. */
+const EXAMTYPES = ["rfeat","combo","error","common","ox","name"];
+const ALLTYPES  = TYPES.map(t=>t.key).filter(k=>k!=="both" && k!=="exam");
+/* 유형은 여러 개를 함께 고른다. cfg.types 는 유형 key 배열(예전 문자열 값도 받아 준다) */
+const selTypes = () => Array.isArray(cfg.types) ? cfg.types
+  : cfg.types === "both" ? ALLTYPES : cfg.types === "exam" ? EXAMTYPES : [cfg.types];
+const onlyName = () => { const t = selTypes(); return t.length === 1 && t[0] === "name"; };
+const sameSet  = (a, b) => a.length === b.length && a.every(x=>b.includes(x));
+const countOf = k => ITEMS.filter(i=>i.category===k).length;
+const NOTECOUNT = ITEMS.reduce((t,i)=>t+(i.notes||[]).length, 0);
+document.getElementById("eyebrow").textContent = `2026 · ${ITEMS.length} ITEMS`;
+/* 단원 옆 숫자는 실제로 출제되는 항목 수 (범위 밖 갈래는 빼고 센다) */
+const unitCount = u => (u.exam === false ? u.cats : u.cats.filter(catInExam))
+                         .reduce((t,c)=>t+countOf(c),0);
+
+/* ---------- 세션 상태 ---------- */
+/* 시험 범위(학습지 1~11쪽·23~34쪽). 단원 통째로 빠지기도 하고(호남),
+ * 단원 안의 한 갈래만 빠지기도 한다(012 단원의 하천). */
+const inExam    = u => u.exam !== false;
+const catInExam = k => { const c = CATS.find(x=>x.key===k); return !!c && c.exam !== false; };
+const EXAMCATS  = UNITS.filter(inExam).flatMap(u=>u.cats).filter(catInExam);
+let cfg = { cats: [...EXAMCATS], types:[...EXAMTYPES], count:20, order:"weak", notes:true };
+let quiz = null;
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]];} return a; };
+
+/* ---------- 홈 ---------- */
+function unitState(u){
+  const on   = u.cats.filter(c=>cfg.cats.includes(c)).length;
+  const want = inExam(u) ? u.cats.filter(catInExam).length : u.cats.length;
+  return on===0 ? "off" : on>=want ? "on" : "part";
+}
+function unitHTML(u){
+  const st = unitState(u);
+  const sub = u.cats.length > 1
+    ? `<div class="subcats">${u.cats.map(c=>
+        `<button class="subchip ${cfg.cats.includes(c)?"on":""}${catInExam(c)?"":" out"}" data-c="${c}"
+           ${catInExam(c)?"":'title="시험 범위 밖"'}>${CATLABEL[c]}<n>${countOf(c)}</n></button>`
+      ).join("")}</div>` : "";
+  return `<div class="unit ${st}${inExam(u)?"":" out"}">
+    <button class="unitrow" data-u="${u.id}">
+      <span class="uno">${u.no}</span>
+      <span class="utitle">${u.title}${inExam(u)?"":`<b class="out">범위 밖</b>`}</span>
+      <span class="ucount">${unitCount(u)}</span>
+      <span class="umark">${st==="on"?"✓":st==="part"?"–":""}</span>
+    </button>${sub}
+  </div>`;
+}
+function areaHTML(a){
+  const us = UNITS.filter(u=>u.area===a.id);
+  const cats = us.flatMap(u=>u.cats);
+  const all = cats.every(c=>cfg.cats.includes(c));
+  const n = us.reduce((t,u)=>t+unitCount(u),0);
+  return `<div class="block">
+    <div class="sec"><span>${a.title}</span><i></i>
+      <button class="areatog ${all?"on":""}" data-a="${a.id}">${all?"전체 해제":"전체 선택"}</button>
+      <em>${n}</em></div>
+    ${us.map(unitHTML).join("")}
+  </div>`;
+}
+/* 고른 범위와 고른 유형이 안 맞을 때의 안내 */
+function warnHTML(picked){
+  if(!picked) return "";
+  const inRange = ITEMS.filter(i=>cfg.cats.includes(i.category));
+  const msg =
+    onlyName() && !inRange.some(hasMap)
+      ? "고른 범위에는 지도가 없어 '지도 → 지명'으로 낼 문제가 없습니다. 다른 유형을 골라 주세요."
+    : !onlyName() && !inRange.some(i=>feats(i).length)
+      ? "고른 범위에는 학습지에 적힌 특징이 없어 '지도 → 지명'으로만 출제됩니다."
+    : onlyName() && inRange.some(i=>!hasMap(i))
+      ? `개념·용어 · 전통 구분 · 개관은 지도가 없어 이 유형에서는 빠집니다(${inRange.filter(hasMap).length}항목 출제).`
+    : "";
+  if(!msg) return "";
+  const warn = msg.includes("빠집니다") ? "var(--faint)" : "var(--verm)";
+  return `<div class="block" style="margin-top:-12px"><div class="hint" style="color:${warn}">${msg}</div></div>`;
+}
+
+function home(){
+  const done = Object.keys(store).length;
+  const mastered = Object.values(store).filter(s=>s.streak>=3).length;
+  const wrong = ITEMS.filter(i=>{ const s=store[i.id]; return s && s.wrong>0 && s.streak<3; }).length;
+  const picked   = ITEMS.filter(i=>cfg.cats.includes(i.category)).length;
+  const playable = pool().length;
+
+  app.innerHTML = `
+  <div class="block">
+    <div class="stats">
+      <div><k>LEARNED</k><v>${done}<small> / ${ITEMS.length}</small></v></div>
+      <div><k>MASTERED</k><v style="color:var(--moss)">${mastered}</v></div>
+      <div><k>WRONG</k><v style="color:var(--verm)">${wrong}</v></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <button class="sheetgo" id="sheetGo">
+      <span class="t">학습지 전수 점검 v2<small>본문·각주 ${SHEETSTAT.lines}문장 · 빈칸 / 특징→이름 / 이름→특징</small></span>
+      <span class="p">${sheetDone()} / ${sheetAll()}</span>
+    </button>
+  </div>
+
+  <div id="scope">${AREAS.map(areaHTML).join("")}</div>
+
+  <div class="block">
+    <div class="sec"><span>출제 설정</span><i></i></div>
+    <div class="types" id="types" style="margin-bottom:9px">
+      ${TYPES.map(t=>{
+        const on = t.key==="exam" ? sameSet(selTypes(), EXAMTYPES)
+                 : t.key==="both" ? sameSet(selTypes(), ALLTYPES)
+                 : selTypes().includes(t.key);
+        return `<button class="chip ${t.big?"wide ":""}${on?"on":""}" data-t="${t.key}">${t.label}
+        <small>${t.hint}</small></button>`; }).join("")}
+    </div>
+    <div class="thint" style="margin:-2px 0 10px;font-size:12px;color:var(--faint)">
+      유형은 여러 개를 함께 고를 수 있습니다 · 지금 ${selTypes().length}가지를 섞어서 냅니다</div>
+    <div class="grid g4" id="counts" style="margin-bottom:9px">
+      ${[10,20,30,999].map(n=>`<button class="chip ${cfg.count===n?"on":""} ${n===999?"":"mono"}" data-n="${n}">${n===999?"전체":n}</button>`).join("")}
+    </div>
+    <div class="grid g2" id="orders" style="margin-bottom:9px">
+      <button class="chip ${cfg.order==="weak"?"on":""}" data-o="weak">오답 우선</button>
+      <button class="chip ${cfg.order==="rand"?"on":""}" data-o="rand">랜덤</button>
+    </div>
+    <button class="chip ${cfg.notes?"on":""}" id="notetog" style="width:100%;text-align:left;min-height:50px;line-height:1.35">
+      각주 포함 <n>${NOTECOUNT}</n>
+      <small style="display:block;font:400 11px var(--sans);color:${cfg.notes?"var(--water-m)":"var(--faint)"};margin-top:2px">
+        ${cfg.notes ? "각주도 시험 범위입니다. 끄면 본문만 출제됩니다"
+                    : "지금은 본문만 출제 중 — 각주도 시험 범위이니 켜 두세요"}</small>
+    </button>
+  </div>
+
+  ${warnHTML(picked)}
+  <div class="actions stack">
+    <button class="btn" id="start" ${playable?"":"disabled"}>시작하기<small>${
+      playable ? (cfg.count===999?playable+"문항":Math.min(cfg.count,playable)+"문항") : "낼 문제가 없습니다"}</small></button>
+    ${wrong?`<button class="btn2 verm" id="wrongOnly">오답 노트 다시 풀기 <span class="mono">${wrong}</span></button>`:""}
+    ${exCount()?`<button class="btn2" id="exlist">뺀 문제 <span class="mono">${exCount()}</span> · 보기·되돌리기</button>`:""}
+    <button class="btn2" id="reset" style="border:0;color:var(--faint);font-size:12.5px;min-height:36px">기록 초기화</button>
+  </div>`;
+
+  document.getElementById("scope").onclick = e=>{
+    const sub = e.target.closest(".subchip");
+    if(sub){
+      const c = sub.dataset.c;
+      cfg.cats = cfg.cats.includes(c) ? cfg.cats.filter(x=>x!==c) : [...cfg.cats, c];
+      return home();
+    }
+    const row = e.target.closest(".unitrow");
+    if(row){
+      const u = UNITS.find(x=>x.id===row.dataset.u);
+      const want = inExam(u) ? u.cats.filter(catInExam) : u.cats;
+      cfg.cats = unitState(u)==="on"
+        ? cfg.cats.filter(c=>!u.cats.includes(c))
+        : [...new Set([...cfg.cats, ...want])];
+      return home();
+    }
+    const at = e.target.closest(".areatog");
+    if(at){
+      const us = UNITS.filter(u=>u.area===at.dataset.a);
+      const all = us.flatMap(u=>u.cats);
+      const on  = us.filter(inExam).flatMap(u=>u.cats).filter(catInExam);  // 켤 때는 시험 범위만
+      cfg.cats = all.every(c=>cfg.cats.includes(c)) || on.every(c=>cfg.cats.includes(c))
+        ? cfg.cats.filter(c=>!all.includes(c))
+        : [...new Set([...cfg.cats, ...on])];
+      return home();
+    }
+  };
+  document.getElementById("types").onclick  = e=>{
+    const el = e.target.closest(".chip"); if(!el) return;
+    const k = el.dataset.t;
+    if(k === "exam") cfg.types = [...EXAMTYPES];
+    else if(k === "both") cfg.types = [...ALLTYPES];
+    else {
+      const cur = selTypes();
+      const next = cur.includes(k) ? cur.filter(x=>x!==k) : [...cur, k];
+      cfg.types = next.length ? next : [k];             // 하나는 남긴다
+    }
+    home();
+  };
+  document.getElementById("counts").onclick = e=>{ const el=e.target.closest(".chip"); if(el){cfg.count=+el.dataset.n; home();} };
+  document.getElementById("orders").onclick = e=>{ const el=e.target.closest(".chip"); if(el){cfg.order=el.dataset.o; home();} };
+  document.getElementById("notetog").onclick = ()=>{ cfg.notes = !cfg.notes; buildOwners(); home(); };
+  document.getElementById("start").onclick  = ()=>begin(pool());
+  document.getElementById("sheetGo").onclick = sheetHome;
+  const xl = document.getElementById("exlist"); if(xl) xl.onclick = ()=>exHome(home);
+  const wo = document.getElementById("wrongOnly");
+  if(wo) wo.onclick = ()=>begin(ITEMS.filter(i=>{ const s=store[i.id]; return s && s.wrong>0 && s.streak<3; }), true);
+  document.getElementById("reset").onclick = ()=>{
+    if(confirm("학습 기록을 모두 지웁니다. 계속할까요?")){ store={}; save(); home(); }
+  };
+}
+
+function pool(){
+  let p = ITEMS.filter(i=>cfg.cats.includes(i.category))
+               .filter(i=>hasMap(i) || feats(i).length);   // 지도도 특징도 없으면 낼 문제가 없다
+  // '지도 → 지명'만 고른 경우 지도가 있는 항목만 낸다 (개념·용어, 전통 구분, 개관은 제외)
+  if(onlyName()) p = p.filter(hasMap);
+  p = p.filter(i=>selTypes().some(t=>canDo(i, t)));     // 고른 유형 중 하나라도 낼 수 있는 항목만
+  if(!p.length) return p;
+  if(cfg.order==="weak"){
+    p = p.map(i=>{
+      const s = store[i.id] || {right:0,wrong:0,streak:0,last:0};
+      const w = 1 + s.wrong*3 - Math.min(s.streak,3)*0.8 + (s.right===0?1.5:0);
+      return {i, k: Math.random() / Math.max(w, 0.15)};
+    }).sort((a,b)=>a.k-b.k).map(x=>x.i);
+  } else shuffle(p);
+  return p;
+}
+
+function begin(list, isReview){
+  if(!list.length){ alert("선택한 범위에 문제가 없습니다."); return; }
+  const n = Math.min(cfg.count, list.length);
+  const picked = list.slice(0, n);
+  quiz = { qs: picked.map(makeQ), at:0, right:0, log:[], review:!!isReview };
+  render();
+}
+
+/* 출제 대상 서술: 본문(features) + '각주 포함'을 켰을 때만 각주(notes) */
+function feats(i){
+  const all = cfg.notes ? [...(i.features||[]), ...(i.notes||[])] : (i.features||[]);
+  return all.filter(f=>!EX.s[norm(f)]);                  // 뺀 문장은 어떤 문제에도 쓰지 않는다
+}
+/* 학습지 각주에서 온 서술인지 (정답 카드에 표시용) */
+const isNote = (i, f) => (i.notes||[]).includes(f);
+/* 어느 항목이 어떤 속성 묶음에 드는지 */
+const BYID = Object.fromEntries(ITEMS.map(i=>[i.id, i]));
+const GROUPOF = (()=>{ const m = {};
+  (typeof GROUPS === "undefined" ? [] : GROUPS).forEach(g=>
+    g.members.forEach(id=>{ (m[id] = m[id] || []).push(g); }));
+  return m; })();
+const groupsOf = i => (GROUPOF[i.id] || []).filter(g=>g.members.length >= 2);
+
+/* 헷갈리는 짝: 이 항목과 함께 묶인 다른 항목들 */
+const TRAPOF = (()=>{ const m = {};
+  (typeof TRAPS === "undefined" ? [] : TRAPS).forEach(t=>
+    t.ids.forEach(id=>{ (m[id] = m[id] || []).push(t); }));
+  return m; })();
+function trapMates(item){
+  const out = [], seen = new Set([item.id]);
+  (TRAPOF[item.id] || []).forEach(t=>t.ids.forEach(id=>{
+    if(!seen.has(id) && BYID[id]){ seen.add(id); out.push(BYID[id]); } }));
+  return out;
+}
+const trapsOf = i => TRAPOF[i.id] || [];
+
+/* 어느 항목에 어떤 특징이 몇 번 나오는지 (중복 특징 판별용) */
+let FEATOWNERS = {};
+function buildOwners(){
+  FEATOWNERS = {};
+  ITEMS.forEach(i=>feats(i).forEach(f=>{ (FEATOWNERS[norm(f)]=FEATOWNERS[norm(f)]||[]).push(i.id); }));
+}
+buildOwners();
+
+/* 항목마다 낼 수 있는 유형이 다르다. 지도가 없으면 지도 문제를, 특징이 하나뿐이면
+ * 보기 조합을, 묶이는 속성이 없으면 공통점 문제를 낼 수 없다. */
+function canDo(item, type){
+  if (EX.t[type + "|" + item.id]) return false;          // 이 유형에서 뺀 항목
+  if (isRegionOv(item.category) && OV_NO.includes(type)) return false;
+  const n = feats(item).length;
+  if (type === "name")   return hasMap(item);
+  if (type === "combo")  return n >= 2 && pickFalse(item, 2).length >= 2;
+  if (type === "common") return groupsOf(item).length > 0 && GROUPS.length >= 5;
+  if (type === "error")  return n >= 1 && siblings(item).length >= 3;
+  return n >= 1;                              // feat · rfeat · ox · recall
+}
+
+function makeQ(item){
+  const menu = selTypes().filter(k=>canDo(item, k));
+  let type = menu.length ? menu[Math.random()*menu.length|0] : selTypes()[0];
+  if (!canDo(item, type)){                    // 고른 유형을 낼 수 없으면 낼 수 있는 것으로
+    const alt = ["rfeat","ox","feat","name","recall"].filter(k=>canDo(item, k));
+    type = alt.length ? alt[0] : "name";
+  }
+  if (type === "feat")   return {type, item, ...buildChoices(item)};
+  if (type === "rfeat")  return {type, item, ...buildReverse(item)};
+  if (type === "ox")     return {type, item, ...buildOX(item)};
+  if (type === "combo")  return {type, item, ...buildCombo(item)};
+  if (type === "error")  return {type, item, ...buildError(item)};
+  if (type === "common") return {type, item, ...buildCommon(item)};
+  return {type, item};                       // name · recall
+}
+
+/* 같은 갈래의 다른 항목(특징이 있는 것만) */
+function siblings(item){
+  const self = norm(item.name);
+  if (OV_SERIES.includes(item.id))                       // 수도권 시기별 변화끼리
+    return ITEMS.filter(i=>OV_SERIES.includes(i.id) && i.id!==item.id && feats(i).length);
+  if (isRegionOv(item.category))                          // 다른 지방의 개관
+    return ITEMS.filter(i=>isRegionOv(i.category) && i.category!==item.category && feats(i).length);
+  return ITEMS.filter(i=>i.category===item.category && i.id!==item.id
+                      && norm(i.name)!==self && feats(i).length);
+}
+
+/* 이 항목의 것이 아닌 서술을 n개.
+ * 한 자리마다 절반 남짓은 '헷갈리는 짝'에서, 나머지는 같은 갈래에서 뽑는다.
+ * 전부 함정에서 뽑으면 답이 뻔해지고, 무작위로만 뽑으면 정작 위험한 짝이 안 나온다. */
+const TRAPSHARE = 0.55;
+function pickFalse(item, n){
+  const mine = new Set(feats(item).map(norm));
+  const take = arr => arr.flatMap(i=>feats(i).map(f=>({f, from:i.name})))
+                         .filter(o=>!mine.has(norm(o.f)));
+  const self = norm(item.name);
+  const trapPool = shuffle(take(trapMates(item)));
+  const sibPool  = shuffle(take(siblings(item)));
+  const wide     = () => shuffle(take(ITEMS.filter(i=>i.scope===item.scope && i.id!==item.id
+                                               && norm(i.name)!==self && feats(i).length
+                                               && !(isRegionOv(item.category) && !OV_SERIES.includes(item.id)
+                                                    && i.category===item.category))));
+  const seen = new Set(), out = [];
+  const grab = pool => { while (pool.length){ const o = pool.shift(); const k = norm(o.f);
+      if (!seen.has(k)){ seen.add(k); out.push(o); return true; } } return false; };
+  while (out.length < n){
+    const first = Math.random() < TRAPSHARE ? trapPool : sibPool;
+    if (grab(first)) continue;
+    if (grab(first === trapPool ? sibPool : trapPool)) continue;
+    if (!grab(wide())) break;
+  }
+  return out;
+}
+
+/* 보기 조합: 옳은 서술 2 + 틀린 서술 2 를 ㄱㄴㄷㄹ 에 섞고, 답지는 두 개씩 묶어 5개 */
+const BOGI = ["ㄱ","ㄴ","ㄷ","ㄹ"];
+function buildCombo(item){
+  const mine  = shuffle([...feats(item)]).slice(0, 2);
+  const other = pickFalse(item, 2);
+  const stmts = shuffle([
+    ...mine.map(f=>({text:f, ok:true})),
+    ...other.map(o=>({text:o.f, ok:false, from:o.from}))
+  ]);
+  const right = stmts.map((st,i)=>st.ok ? BOGI[i] : null).filter(Boolean).sort().join("");
+  const pairs = [];
+  for (let a=0; a<4; a++) for (let b=a+1; b<4; b++) pairs.push(BOGI[a]+BOGI[b]);
+  const opts = shuffle([right, ...shuffle(pairs.filter(p=>p!==right)).slice(0,4)])
+                 .map(p=>({label:p, ok:p===right}));
+  return {stmts, opts};
+}
+
+/* 오류 찾기: 같은 갈래 네 줄짜리 표에서 한 줄만 남의 설명으로 바꿔 놓는다 */
+function buildError(item){
+  const others = shuffle(siblings(item)).slice(0, 3);
+  const wrong  = pickFalse(item, 1)[0];
+  const rows = shuffle([
+    {name:item.name, text:(wrong ? wrong.f : feats(item)[0]), ok:!wrong, from:wrong && wrong.from},
+    ...others.map(i=>{ const fs = feats(i);
+      return {name:i.name, text:fs[Math.random()*fs.length|0], ok:true}; })
+  ]);
+  const opts = rows.map((r,i)=>({label:String(i+1), ok:!r.ok}));
+  return {rows, opts, right:feats(item)};
+}
+
+/* 공통점: 같은 속성으로 묶이는 지역 두셋을 보여 주고 그 속성을 묻는다 */
+function buildCommon(item){
+  const gs = groupsOf(item);
+  const g  = gs[Math.random()*gs.length|0];
+  // 채점이 이 항목에 기록되므로 자기 자신은 반드시 보여 준다
+  const rest = shuffle(g.members.filter(id=>id!==item.id).map(id=>BYID[id]));
+  const show = shuffle([item, ...rest.slice(0, Math.min(2, rest.length))]);
+  const others = shuffle(GROUPS.filter(x=>x.id!==g.id)).slice(0, 4);
+  const opts = shuffle([{label:g.label, ok:true}, ...others.map(x=>({label:x.label, ok:false}))]);
+  return {group:g, show, opts};
+}
+
+
+
+/* O·X 판별: 절반은 그 지역의 실제 서술, 절반은 다른 지역의 서술을 가져다 붙인다.
+ * 기출의 주력 형식(자료 속 오류 찾기 / 진술 O·X 채점)을 연습하기 위한 유형. */
+function buildOX(item){
+  const mine = feats(item);
+  const mineSet = new Set(mine.map(norm));
+  const self = norm(item.name);
+  if (Math.random() < 0.5){
+    return {stmt: mine[Math.random()*mine.length|0], truth:true, owner:item.name};
+  }
+  const wrong = pickFalse(item, 1)[0];
+  if(!wrong) return {stmt: mine[0], truth:true, owner:item.name};
+  return {stmt: wrong.f, truth:false, owner: wrong.from};
+}
+
+/* 특징 → 지명: 단서로 쓸 특징은 그 항목에만 있는 것을 먼저 고른다 */
+function buildReverse(item){
+  const all = feats(item);
+  const uniq = all.filter(f=>FEATOWNERS[norm(f)].length === 1);
+  const clue = (uniq.length ? uniq : all)[Math.random()*(uniq.length||all.length)|0];
+  const owners = new Set(FEATOWNERS[norm(clue)]);          // 같은 특징을 가진 지역은 보기에서 제외
+  const self = norm(item.name);
+  const pick = arr => shuffle(arr.filter(i=>
+        !owners.has(i.id) && norm(i.name)!==self
+        && (isOverview(item.category) || !isOverview(i.category))));   // 지역을 묻는데 소제목이 보기로 나오지 않게
+  const picks = [];
+  const push = arr => { for(const i of arr){
+      if(!picks.some(p=>norm(p.name)===norm(i.name))){ picks.push(i); if(picks.length>=4) return; } } };
+  push(pick(ITEMS.filter(i=>i.category===item.category)));
+  if(picks.length<4) push(pick(ITEMS.filter(i=>i.scope===item.scope)));
+  if(picks.length<4) push(pick(ITEMS));
+  const opts = shuffle([{name:item.name, ok:true},
+                        ...picks.map(i=>({name:i.name, ok:false}))]);
+  return {clue, opts};
+}
+
+/* 5지선다 보기 생성: 같은 카테고리 우선 → 같은 scope → 전체 */
+function buildChoices(item){
+  const all = feats(item);
+  const mine = new Set(all.map(norm));
+  const answer = all[Math.random()*all.length|0];
+  const self = norm(item.name);
+  const take = arr => arr.filter(i=>i.id!==item.id && norm(i.name)!==self)
+                        .flatMap(i=>feats(i).map(f=>({f, from:i.name})))
+                        .filter(o=>!mine.has(norm(o.f)));
+  const seen = new Set([norm(answer)]);
+  const picks = [];
+  const push = arr => { for(const o of arr){ const k=norm(o.f);
+      if(!seen.has(k)){ seen.add(k); picks.push(o); if(picks.length>=4) return; } } };
+  push(shuffle(take(siblings(item))));                    // 같은 갈래(개관은 다른 지방의 개관)
+  // 모자라면 넓혀 뽑되, 개관이면 같은 지방의 다른 소제목은 쓰지 않는다
+  const ok = i => !isRegionOv(item.category) || OV_SERIES.includes(item.id) || !isRegionOv(i.category) || i.category!==item.category;
+  if(picks.length<4) push(shuffle(take(ITEMS.filter(i=>i.scope===item.scope && ok(i)))));
+  if(picks.length<4) push(shuffle(take(ITEMS.filter(ok))));
+  const opts = shuffle([{f:answer, from:item.name, ok:true}, ...picks.map(o=>({...o, ok:false}))]);
+  return {opts};
+}
+
+
+/* ---------- 문제 화면 ---------- */
+function rulerHTML(){
+  const n = quiz.qs.length, at = quiz.at;
+  if(n > 40){
+    return `<div class="ruler"><s class="d" style="flex-grow:${at}"></s><s style="flex-grow:${n-at}"></s></div>`;
+  }
+  let out = "";
+  for(let i=0;i<n;i++) out += `<s class="${i<at?"d":i===at?"c":""}"></s>`;
+  return `<div class="ruler">${out}</div>`;
+}
+function headHTML(){
+  const pad = String(quiz.at+1).padStart(2,"0");
+  return `${rulerHTML()}
+    <div class="meta"><span>${pad} / ${quiz.qs.length}${quiz.review?" · 오답":""}</span>
+      <span class="mr"><button class="exbtn" id="exq" type="button" title="이상한 문제를 다시 내지 않기">빼기</button>
+      <em>정답 <b>${quiz.right}</b></em></span></div>`;
+}
+function mapHTML(item){
+  const m = MAPS[item.map];
+  const marker = item.marker ? `<div class="marker" style="left:${item.marker.x}%;top:${item.marker.y}%"></div>` : "";
+  return `
+    <div class="sec" style="margin-bottom:8px"><span>${esc(m.title)}</span><i></i>
+      ${m.labeled?`<em>${item.num}번</em>`:""}</div>
+    <div class="mapbox"><div style="position:relative;width:${zoom}%">
+      <img src="${m.image}" alt="${esc(m.title)}">${marker}
+    </div><u class="tl"></u><u class="br"></u></div>
+    <div class="zoom"><button data-z="-">축소</button><button data-z="+">확대</button><button data-z="0">원래대로</button></div>`;
+}
+
+let zoom = 100;
+function render(){
+  const q = quiz.qs[quiz.at], it = q.item;
+  const kind = kindOf(it.category);
+  if (q.type === "rfeat")  return renderReverse(q);
+  if (q.type === "combo")  return renderCombo(q);
+  if (q.type === "error")  return renderError(q);
+  if (q.type === "common") return renderCommon(q);
+  if (q.type === "ox")     return renderOX(q);
+  if (q.type === "recall") return renderRecall(q);
+
+  if (q.type === "name"){
+    const labeled = MAPS[it.map].labeled;
+    app.innerHTML = `
+    <div class="block">${headHTML()}</div>
+    <div class="block">${mapHTML(it)}</div>
+    <div class="block q">
+      ${labeled?`<span class="badge">${it.num}</span>`:""}
+      <h2>${labeled ? `지도에서 <em>${it.num}번</em>으로<br>표시된 ${kind}의 이름은?`
+                    : `지도에 <em>표시된</em><br>${kind}의 이름은?`}</h2>
+    </div>
+    <div class="block">
+      <div class="blank" id="blank">
+        <input type="text" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false"
+               placeholder="이름을 입력하세요">
+      </div>
+      <div class="hintrow"><span>접미어(시·군·도·강·섬)는 생략해도 정답</span><em>ENTER</em></div>
+    </div>
+    <div class="actions side">
+      <button class="btn2" id="skip">모르겠음</button>
+      <button class="btn" id="sub">제출</button>
+    </div>`;
+    const input = document.getElementById("ans");
+    input.focus();
+    const submit = ()=>answerName(input.value);
+    input.onkeydown = e => {
+      if(e.key !== "Enter") return;
+      if(e.isComposing || e.keyCode === 229) return;   // 한글 조합을 확정하는 Enter는 흘려보냄
+      e.preventDefault();
+      e.stopPropagation();                              // 이 Enter가 '다음 문제'까지 누르지 않도록
+      submit();
+    };
+    document.getElementById("sub").onclick = submit;
+    document.getElementById("skip").onclick = ()=>answerName("");
+  } else {
+    app.innerHTML = `
+    <div class="block">${headHTML()}</div>
+    <div class="block">
+      <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i>
+        ${numOf(it)}</div>
+      <div class="q"><h2><mark>${esc(it.name)}</mark>에 대한 설명으로<br>옳은 것은?</h2></div>
+    </div>
+    <div class="opts" id="opts">
+      ${q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><b>${i+1}</b><span>${esc(o.f)}</span></button>`).join("")}
+    </div>`;
+    document.getElementById("opts").onclick = e=>{
+      const b = e.target.closest(".opt"); if(b) answerFeat(+b.dataset.i);
+    };
+    document.onkeydown = e=>{ if(/^[1-5]$/.test(e.key)) answerFeat(+e.key-1); };
+  }
+  bindZoom();
+}
+
+function renderReverse(q){
+  const it = q.item;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i></div>
+    <div class="q"><h2>다음 설명에 해당하는 ${kindOf(it.category)}${josa(kindOf(it.category),"은","는")}?</h2></div>
+    <div class="clue">${esc(q.clue)}</div>
+  </div>
+  <div class="opts" id="opts">
+    ${q.opts.map((o,i)=>`<button class="opt name" data-i="${i}"><b>${i+1}</b><span>${esc(o.name)}</span></button>`).join("")}
+  </div>`;
+  document.getElementById("opts").onclick = e=>{
+    const b = e.target.closest(".opt"); if(b) answerReverse(+b.dataset.i);
+  };
+  document.onkeydown = e=>{ if(/^[1-5]$/.test(e.key)) answerReverse(+e.key-1); };
+}
+
+/* 고른 답을 채점하고 정답 카드를 붙이는 공통 처리 */
+function gradeChoice(q, idx, after){
+  const it = q.item;
+  if(!q.opts || q.opts[idx]===undefined || q.answered) return;
+  q.answered = true;
+  document.onkeydown = null;
+  const ok = q.opts[idx].ok;
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine:q.opts[idx].label, type:q.typeLabel});
+  document.querySelectorAll(".opt").forEach((b,i)=>{
+    b.disabled = true;
+    if(q.opts[i].ok){ b.classList.add("correct"); b.insertAdjacentHTML("beforeend", `<em>정답</em>`); }
+    else if(i===idx){ b.classList.add("wrong"); b.insertAdjacentHTML("beforeend", `<em>내 답</em>`); }
+  });
+  app.insertAdjacentHTML("beforeend", after(ok) + nextBtn());
+  wireNext();
+}
+function wireOpts(fn){
+  document.getElementById("opts").onclick = e=>{
+    const b = e.target.closest(".opt"); if(b) fn(+b.dataset.i);
+  };
+  document.onkeydown = e=>{ if(/^[1-5]$/.test(e.key)) fn(+e.key-1); };
+}
+/* 이 항목이 걸린 함정을 정답 카드 아래에 붙인다 */
+const trapHTML = it => {
+  const ts = trapsOf(it);
+  if(!ts.length) return "";
+  return ts.map(t=>`
+    <div class="block" style="margin-top:14px">
+      <div class="trap">
+        <lbl>헷갈리는 짝 · ${esc(t.label)}</lbl>
+        <div class="tw">${esc(t.why)}</div>
+      </div>
+    </div>`).join("");
+};
+const allFeatHTML = it => `
+  <div class="block" style="margin-top:22px">
+    <div class="allfeat">
+      <lbl>${esc(it.name)} · 전체 ${whatOf(it.category)}</lbl>
+      <div class="stack" style="gap:6px">${feats(it).map(f=>
+        `<div style="font-size:14px;line-height:1.5">${esc(f)}</div>`).join("")}</div>
+    </div>
+  </div>`;
+
+/* ---------- 보기 조합 (ㄱㄴㄷㄹ) ---------- */
+function renderCombo(q){
+  const it = q.item;
+  q.typeLabel = "보기 조합";
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i>${numOf(it)}</div>
+    <div class="q"><h2><mark>${esc(it.name)}</mark>에 대한 설명으로<br>옳은 것만을 고른 것은?</h2></div>
+    <div class="bogi">
+      <div class="bhead">보기</div>
+      ${q.stmts.map((st,i)=>`<div class="bitem" data-b="${i}">
+        <span class="bk">${BOGI[i]}</span><span class="bt">${esc(st.text)}</span></div>`).join("")}
+    </div>
+  </div>
+  <div class="opts" id="opts">
+    ${q.opts.map((o,i)=>`<button class="opt pair" data-i="${i}"><b>${i+1}</b><span>${o.label}</span></button>`).join("")}
+  </div>`;
+  wireOpts(i=>gradeChoice(q, i, ()=>{
+    document.querySelectorAll(".bitem").forEach((el,n)=>{
+      const st = q.stmts[n];
+      el.classList.add(st.ok ? "t" : "f");
+      if(!st.ok) el.querySelector(".bt").insertAdjacentHTML("beforeend",
+        `<div class="bwhy">${esc(st.from)}의 특징입니다</div>`);
+    });
+    return allFeatHTML(it) + trapHTML(it);
+  }));
+}
+
+/* ---------- 오류 찾기 ---------- */
+function renderError(q){
+  const it = q.item;
+  q.typeLabel = "오류 찾기";
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i></div>
+    <div class="q"><h2>다음 표에서 설명이<br><em>옳지 않은</em> 것은?</h2></div>
+    <div class="tbl">
+      ${q.rows.map((r,i)=>`<div class="trow" data-r="${i}">
+        <span class="tn">${i+1}</span><span class="tk">${esc(r.name)}</span>
+        <span class="tv">${esc(r.text)}</span></div>`).join("")}
+    </div>
+  </div>
+  <div class="opts" id="opts">
+    ${q.opts.map((o,i)=>`<button class="opt pair" data-i="${i}"><b>${i+1}</b><span>${o.label}번</span></button>`).join("")}
+  </div>`;
+  wireOpts(i=>gradeChoice(q, i, ()=>{
+    const bad = q.rows.findIndex(r=>!r.ok);
+    if(bad>=0){
+      const el = document.querySelectorAll(".trow")[bad];
+      el.classList.add("bad");
+      el.querySelector(".tv").insertAdjacentHTML("beforeend",
+        `<div class="bwhy">${esc(q.rows[bad].from)}의 특징입니다</div>`);
+    }
+    return allFeatHTML(it) + trapHTML(it);
+  }));
+}
+
+/* ---------- 공통점 ---------- */
+function renderCommon(q){
+  const it = q.item;
+  q.typeLabel = "공통점";
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i></div>
+    <div class="q"><h2>다음 ${q.show.length}곳을<br><em>묶는 것</em>은?</h2></div>
+    <div class="trio">${q.show.map(i=>`<div>${esc(i.name)}</div>`).join("")}</div>
+  </div>
+  <div class="opts" id="opts">
+    ${q.opts.map((o,i)=>`<button class="opt name" data-i="${i}"><b>${i+1}</b><span>${esc(o.label)}</span></button>`).join("")}
+  </div>`;
+  wireOpts(i=>gradeChoice(q, i, ()=>`
+    <div class="block" style="margin-top:22px">
+      <div class="allfeat">
+        <lbl>${esc(q.group.label)} · ${q.group.members.length}곳</lbl>
+        <div style="font-size:15px;font-weight:600;line-height:1.5;margin-bottom:7px">${
+          q.group.members.map(id=>esc(BYID[id].name)).join(" · ")}</div>
+        <div style="font-size:13.5px;line-height:1.6;color:var(--ink2)">${esc(q.group.why)}</div>
+      </div>
+    </div>` + trapHTML(it)));
+}
+
+function renderOX(q){
+  const it = q.item;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i></div>
+    <div class="q"><h2>다음 자료의 설명이<br><em>옳은지</em> 판단하세요</h2></div>
+    <div class="card" style="margin-top:14px">
+      <div class="who">${esc(it.name)}<em>O · X</em></div>
+      <div class="stmt">${esc(q.stmt)}</div>
+    </div>
+    <div class="hintrow" style="margin-top:10px"><span>키보드 O / X 또는 1 / 2</span><em>O·X</em></div>
+  </div>
+  <div class="actions oxrow">
+    <button class="btn verm" id="oxno">✗ 틀림<small>X</small></button>
+    <button class="btn moss" id="oxyes">✓ 옳음<small>O</small></button>
+  </div>`;
+  document.getElementById("oxyes").onclick = ()=>answerOX(true);
+  document.getElementById("oxno").onclick  = ()=>answerOX(false);
+  document.onkeydown = e=>{
+    if(e.isComposing) return;
+    const k = e.key.toLowerCase();
+    if(k==="o" || k==="1") answerOX(true);
+    if(k==="x" || k==="2") answerOX(false);
+  };
+}
+
+function answerOX(said){
+  const q = quiz.qs[quiz.at], it = q.item;
+  if(q.answered) return;
+  q.answered = true;
+  document.onkeydown = null;
+  const ok = (said === q.truth);
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine: said?"옳음":"틀림", type:"O·X"});
+  document.getElementById("oxyes").disabled = true;
+  document.getElementById("oxno").disabled  = true;
+
+  const why = q.truth
+    ? `이 설명은 <b>${esc(it.name)}</b>의 특징으로 학습지에 나온 문장입니다.`
+    : `이 설명은 <b>${esc(it.name)}</b>${josa(it.name,"이","가")} 아니라 <b>${esc(q.owner)}</b>의 특징입니다.`;
+  app.insertAdjacentHTML("beforeend", `
+    <div class="block" style="margin-top:22px">
+      <div class="oxjudge ${ok?"ok":"no"}">
+        ${ok?"맞혔습니다":"틀렸습니다"} · 정답은 <b>${q.truth?"옳음(O)":"틀림(X)"}</b><br>${why}
+      </div>
+      <div class="allfeat" style="margin-top:14px">
+        <lbl>${esc(it.name)} · 전체 ${whatOf(it.category)}</lbl>
+        <div class="stack" style="gap:6px">${feats(it).map(f=>`<div style="font-size:14px;line-height:1.5">${esc(f)}</div>`).join("")}</div>
+      </div>
+    </div>
+    ${trapHTML(it)}
+    ${nextBtn()}`);
+  wireNext();
+}
+
+function renderRecall(q){
+  const it = q.item;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i>
+      ${numOf(it)}</div>
+    <div class="recall">
+      <div class="nm">${esc(it.name)}</div>
+      <div class="ask">이 ${kindOf(it.category)}의 ${whatOf(it.category)}${josa(whatOf(it.category),"을","를")} 떠올려 보세요<br>
+        <em>${feats(it).length}가지</em></div>
+    </div>
+  </div>
+  <div class="actions"><button class="btn" id="show">특징 보기<small>ENTER</small></button></div>`;
+  const show = ()=>revealRecall(q);
+  document.getElementById("show").onclick = show;
+  document.onkeydown = e=>{ if(e.key==="Enter" && !e.isComposing){ e.preventDefault(); show(); } };
+}
+
+function revealRecall(q){
+  const it = q.item;
+  document.onkeydown = null;
+  app.innerHTML = `
+  <div class="block">${headHTML()}</div>
+  <div class="block">
+    <div class="sec" style="margin-bottom:14px"><span>${UNITOF[it.category].no} ${CATLABEL[it.category]}</span><i></i></div>
+    <div class="recall"><div class="nm">${esc(it.name)}</div></div>
+  </div>
+  <div class="block">
+    <div class="ans">
+      <div class="feats"><lbl>FEATURES</lbl>
+        <div class="stack" style="gap:7px">${featList(it)}</div></div>
+    </div>
+  </div>
+  <div class="actions side">
+    <button class="btn2 verm" id="miss">못 떠올림</button>
+    <button class="btn" id="got">다 떠올림</button>
+  </div>`;
+  const done = ok => {
+    record(it, ok);
+    if(ok) quiz.right++;
+    quiz.log.push({item:it, ok, mine: ok?"떠올림":"못 떠올림", type:"떠올리기"});
+    quiz.at++; document.onkeydown = null;
+    quiz.at < quiz.qs.length ? render() : result();
+  };
+  document.getElementById("got").onclick  = ()=>done(true);
+  document.getElementById("miss").onclick = ()=>done(false);
+  document.onkeydown = e=>{
+    if(e.isComposing) return;
+    if(e.key==="Enter"){ e.preventDefault(); done(true); }
+    if(e.key==="Backspace"){ e.preventDefault(); done(false); }
+  };
+}
+
+function bindZoom(){
+  const row = document.querySelector(".zoom"); if(!row) return;
+  row.onclick = e=>{
+    const b = e.target.closest("button"); if(!b) return;
+    zoom = b.dataset.z==="+" ? Math.min(zoom+50, 400) : b.dataset.z==="-" ? Math.max(zoom-50, 100) : 100;
+    const inner = document.querySelector(".mapbox > div");
+    if(inner) inner.style.width = zoom + "%";
+  };
+}
+
+function record(item, ok){
+  const s = stat(item.id);
+  if(ok){ s.right++; s.streak++; } else { s.wrong++; s.streak = 0; }
+  s.last = Date.now(); save();
+}
+const featList = it => feats(it).map(f=>`<div class="feat"><i></i><span>${esc(f)}</span></div>`).join("");
+
+function answerName(val){
+  const q = quiz.qs[quiz.at], it = q.item;
+  const verdict = judge(val, it);
+  const ok = verdict !== null;
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine: val || "(미입력)", type:"서답형"});
+
+  const blank = document.getElementById("blank");
+  blank.classList.add(ok?"ok":"no");
+  blank.insertAdjacentHTML("beforeend",
+    `<span class="verdict" style="color:var(--${ok?"moss":"verm"})">${ok?(verdict==="typo"?"정답 · 오타":"정답"):"오답"}</span>`);
+  document.getElementById("ans").disabled = true;
+
+  app.insertAdjacentHTML("beforeend", `
+    <div class="block" style="margin-top:22px">
+      <div class="ans ${ok?"":"no"}">
+        <div class="top" ${feats(it).length?"":'style="border-bottom:0"'}>
+          <lbl>ANSWER</lbl>
+          <div><span class="name">${esc(it.name)}</span>${
+            it.aliases && it.aliases.length ? `<span class="alias">${esc(it.aliases.join(" / "))}</span>` : ""}</div>
+          ${val ? `<div class="mine">내 답 · <b>${esc(val)}</b></div>` : ""}
+        </div>
+        ${feats(it).length ? `<div class="feats"><lbl>FEATURES</lbl>
+          <div class="stack" style="gap:7px">${featList(it)}</div></div>` : ""}
+      </div>
+    </div>
+    ${trapHTML(it)}
+    ${nextBtn()}`);
+  document.getElementById("sub").disabled = true;
+  document.getElementById("skip").disabled = true;
+  wireNext();
+}
+
+function answerFeat(idx){
+  const q = quiz.qs[quiz.at], it = q.item;
+  if(!q.opts || q.opts[idx]===undefined || q.answered) return;
+  q.answered = true;
+  document.onkeydown = null;
+  const ok = q.opts[idx].ok;
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine:q.opts[idx].f, type:"5지선다"});
+  document.querySelectorAll(".opt").forEach((b,i)=>{
+    b.disabled = true;
+    if(q.opts[i].ok){ b.classList.add("correct"); b.insertAdjacentHTML("beforeend", `<em>정답</em>`); }
+    else if(i===idx){ b.classList.add("wrong"); b.insertAdjacentHTML("beforeend", `<em>내 답</em>`); }
+    else b.insertAdjacentHTML("beforeend", `<em>${esc(q.opts[i].from)}</em>`);
+  });
+  app.insertAdjacentHTML("beforeend", `
+    <div class="block" style="margin-top:22px">
+      <div class="allfeat">
+        <lbl>${esc(it.name)} · 전체 ${whatOf(it.category)}</lbl>
+        <div class="stack" style="gap:6px">${feats(it).map(f=>`<div style="font-size:14px;line-height:1.5">${esc(f)}</div>`).join("")}</div>
+      </div>
+    </div>
+    ${trapHTML(it)}
+    ${nextBtn()}`);
+  wireNext();
+}
+
+function answerReverse(idx){
+  const q = quiz.qs[quiz.at], it = q.item;
+  if(!q.opts || q.opts[idx]===undefined || q.answered) return;
+  q.answered = true;
+  document.onkeydown = null;
+  const ok = q.opts[idx].ok;
+  if(ok) quiz.right++;
+  record(it, ok);
+  quiz.log.push({item:it, ok, mine:q.opts[idx].name, type:"특징→지명"});
+  document.querySelectorAll(".opt").forEach((b,i)=>{
+    b.disabled = true;
+    if(q.opts[i].ok){ b.classList.add("correct"); b.insertAdjacentHTML("beforeend", `<em>정답</em>`); }
+    else if(i===idx){ b.classList.add("wrong"); b.insertAdjacentHTML("beforeend", `<em>내 답</em>`); }
+  });
+  app.insertAdjacentHTML("beforeend", `
+    <div class="block" style="margin-top:22px">
+      <div class="allfeat">
+        <lbl>${esc(it.name)} · 전체 ${whatOf(it.category)}</lbl>
+        <div class="stack" style="gap:6px">${feats(it).map(f=>`<div style="font-size:14px;line-height:1.5">${esc(f)}</div>`).join("")}</div>
+      </div>
+    </div>
+    ${trapHTML(it)}
+    ${nextBtn()}`);
+  wireNext();
+}
+
+const nextBtn = () => `<button class="btn ink" id="next">${
+  quiz.at+1 < quiz.qs.length ? "다음 문제" : "결과 보기"}<small>ENTER</small></button>`;
+
+function wireNext(){
+  const b = document.getElementById("next");
+  b.focus();
+  b.scrollIntoView({block:"nearest", behavior:"smooth"});
+  b.onclick = ()=>{ quiz.at++; document.onkeydown=null; quiz.at<quiz.qs.length ? render() : result(); };
+  document.onkeydown = null;
+  setTimeout(()=>{                                       // 방금 누른 Enter가 이 핸들러에 닿지 않게
+    document.onkeydown = e=>{
+      if(e.key!=="Enter" || e.isComposing || e.keyCode===229) return;
+      e.preventDefault(); b.click();
+    };
+  }, 0);
+}
+
+/* ---------- 결과 ---------- */
+function result(){
+  document.onkeydown = null;
+  const wrong = quiz.log.filter(l=>!l.ok);
+  const rate = Math.round(quiz.right / quiz.qs.length * 100);
+  const byCat = {};
+  quiz.log.forEach(l=>{
+    const k = UNITOF[l.item.category].no + " " + CATLABEL[l.item.category];
+    byCat[k] = byCat[k] || {n:0, r:0};
+    byCat[k].n++; if(l.ok) byCat[k].r++;
+  });
+  app.innerHTML = `
+  <div class="block">
+    <div class="eyebrow">SESSION COMPLETE</div>
+    <div class="score">
+      <div><span class="n">${quiz.right}</span><span class="of">/ ${quiz.qs.length}</span></div>
+      <div class="r"><k>ACCURACY</k><v>${rate}%</v></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="sec"><span>범위별</span><i></i></div>
+    ${Object.entries(byCat).map(([k,v])=>
+      `<div class="lead"><span>${k}</span><i></i><v class="${v.r===v.n?"full":""}">${v.r} / ${v.n}</v></div>`).join("")}
+  </div>
+
+  ${wrong.length ? `<div class="block">
+    <div class="sec warn"><span>틀린 문제</span><i></i><em>${wrong.length}</em></div>
+    ${wrong.map(l=>`<div class="wrongrow">
+      <div class="l"><div class="nm">${esc(l.item.name)}</div>
+        <div class="ft">${esc(feats(l.item)[0]||"")}</div></div>
+      <div class="r"><k>MINE</k><v>${esc(l.mine)}</v></div>
+    </div>`).join("")}
+  </div>` : `<div class="block center">모두 맞혔습니다.</div>`}
+
+  <div class="stack">
+    ${wrong.length?`<button class="btn verm" id="again">틀린 것만 다시 풀기<small>${wrong.length}</small></button>`:""}
+    <button class="btn2" id="hm">처음으로</button>
+  </div>`;
+  if(wrong.length) document.getElementById("again").onclick = ()=>begin(wrong.map(l=>l.item), true);
+  document.getElementById("hm").onclick = home;
+}
+
+/* ---------- 학습지 전수 점검 ----------
+ * data/sheet.js 의 SHEET 을 그대로 푼다. tools/make_test.py 가 같은 데이터로 PDF 를 찍으므로
+ * 문항 번호가 docs/지역이해-점검시험-v2.pdf 와 같다. 기록은 따로 저장한다.
+ *   A 빈칸 채우기(u.cards) · B 특징 → 이름(u.b) · C 이름 → 특징(u.c) */
+const SLS = "jiri-sheet-v1";
+let sstore = {};
+try { sstore = JSON.parse(localStorage.getItem(SLS) || "{}"); } catch(e){ sstore = {}; }
+const ssave = ()=>{ try{ localStorage.setItem(SLS, JSON.stringify(sstore)); }catch(e){} };
+const CIRC = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳";
+const circ = n => CIRC[n] || `(${n+1})`;
+const abOff = (c, i) => !!EX.ab[c.id + "#" + i];
+const cardMax = c => c.ans.filter((_,i)=>!abOff(c,i)).length + (c.hide ? 1 : 0);
+const PARTS = [
+  {k:"A", label:"빈칸 채우기",  hint:"이름 칸 + ①②③", get:u=>u.cards},
+  {k:"B", label:"특징 → 이름",  hint:"문장을 보고 어디인지", get:u=>u.b},
+  {k:"C", label:"이름 → 특징",  hint:"이름을 보고 꺼내기", get:u=>u.c},
+];
+const qMax = (part, q) => part==="A" ? cardMax(q) : part==="B" ? 1 : q.n;
+const qKey = (part, q) => part==="B" ? q.k : q.id;          // B 는 내용으로 기억(번호가 바뀌어도 유지)
+const live = (P, u) => P.get(u).map((_,i)=>i).filter(i=>!EX.q[qKey(P.k, P.get(u)[i])]);
+const SHEETSTAT = (()=>{ let cards=0, lines=0;
+  for(const u of SHEET) for(const c of u.cards){ cards++; lines+=c.lines.length; }
+  return {cards, lines}; })();
+const sheetAll  = () => SHEET.reduce((t,u)=>t+PARTS.reduce((n,P)=>n+live(P,u).length, 0), 0);
+const sheetDone = () => SHEET.reduce((t,u)=>t+PARTS.reduce((n,P)=>
+  n+live(P,u).filter(i=>sstore[qKey(P.k, P.get(u)[i])]).length, 0), 0);
+const cardOk = c => { const r = sstore[c.id]; return !!r && r.got === r.max; };
+let sq = null;   // {u, part, list:[문항 번호], at}
+
+function blankOk(input, ans){
+  const a = norm(ans), g = norm(input);
+  if(!g) return false;
+  if(g === a || stripSuffix(g) === stripSuffix(a)) return true;
+  const trim = x => x.replace(/(명|개|년|위)$/,"");
+  if(/\d/.test(a)) return trim(g) === trim(a);
+  return a.length >= 4 && lev(g, a) <= 1;
+}
+
+function sheetHome(){
+  document.onkeydown = null; sq = null;
+  const rows = SHEET.map((u,ui)=>{
+    const btns = PARTS.map(P=>{
+      const qs = live(P,u).map(i=>P.get(u)[i]);
+      const K = q => qKey(P.k, q);
+      if(!qs.length) return `<button class="pbtn" disabled><span class="pk">${P.k}</span><span class="pl">${P.label}</span><span class="pn">문항 없음</span></button>`;
+      const done = qs.filter(q=>sstore[K(q)]).length;
+      const got  = qs.reduce((t,q)=>t+(sstore[K(q)]?Math.min(sstore[K(q)].got, qMax(P.k,q)):0), 0);
+      const max  = qs.reduce((t,q)=>t+qMax(P.k,q), 0);
+      const bad  = qs.filter(q=>sstore[K(q)] && sstore[K(q)].got < sstore[K(q)].max).length;
+      return `<button class="pbtn" data-u="${ui}" data-p="${P.k}">
+        <span class="pk">${P.k}</span>${bad?`<span class="rd">✕${bad}</span>`:""}
+        <span class="pl">${P.label}</span>
+        <span class="pn">${done}/${qs.length} · <em>${got}</em>/${max}</span>
+        <i style="width:${Math.round(done/qs.length*100)}%"></i></button>`;
+    }).join("");
+    return `<div class="srow">
+      <div class="head"><span class="uno">${u.no}</span><b>${esc(u.title)}</b><small>학습지 ${u.pages}</small></div>
+      <div class="parts">${btns}</div>
+    </div>`;
+  }).join("");
+  app.innerHTML = `
+  <div class="block">
+    <div class="sec"><span>학습지 전수 점검 v2</span><i></i><em>${sheetDone()} / ${sheetAll()}</em></div>
+    <p style="margin:0 0 14px;font-size:13px;line-height:1.65;color:var(--ink2)">
+      한 문장을 세 방향으로 묻습니다. <b>A</b> 설명을 다 보고 이름과 빈칸 채우기 ·
+      <b>B</b> 문장 하나만 보고 어느 곳(무엇)인지 · <b>C</b> 이름만 보고 특징 꺼내기.
+      PDF(docs/지역이해-점검시험-v2.pdf)와 번호가 같습니다. 이어서 풀려면 누르고, 빨간 ✕ 는 틀린 수입니다.</p>
+    ${rows}
+  </div>
+  <div class="stack">
+    <button class="btn2" id="hm">처음으로</button>
+    ${Object.keys(EX.q).length+Object.keys(EX.ab).length ? `<button class="btn2" id="sexlist">뺀 문항 ${Object.keys(EX.q).length+Object.keys(EX.ab).length} · 보기·되돌리기</button>` : ""}
+    <button class="btn2" id="sreset" style="border:0;color:var(--faint);font-size:12.5px;min-height:36px">점검 기록 초기화</button>
+  </div>`;
+  app.querySelectorAll(".pbtn[data-p]").forEach(b=>b.onclick=()=>{
+    const ui = +b.dataset.u, part = b.dataset.p, P = PARTS.find(x=>x.k===part), qs = P.get(SHEET[ui]);
+    const all = live(P, SHEET[ui]);
+    const bad = all.filter(i=>{ const r=sstore[qKey(part, qs[i])]; return r && r.got < r.max; });
+    const k = all.findIndex(i=>!sstore[qKey(part, qs[i])]);
+    // 다 풀었고 틀린 게 있으면 틀린 것만, 아니면 안 푼 곳부터
+    if(k < 0 && bad.length) sq = {u:ui, part, list:bad, at:0, redo:true};
+    else sq = {u:ui, part, list:all, at: k<0 ? 0 : k};
+    sheetGo();
+  });
+  document.getElementById("hm").onclick = home;
+  const sx = document.getElementById("sexlist"); if(sx) sx.onclick = ()=>exHome(sheetHome);
+  document.getElementById("sreset").onclick = ()=>{
+    if(confirm("전수 점검 기록을 모두 지웁니다. 계속할까요?")){ sstore={}; ssave(); sheetHome(); }
+  };
+  window.scrollTo(0,0);
+}
+
+function sheetGo(){
+  if(sq.at >= sq.list.length) return sheetHome();
+  if(sq.part === "B") return cardB();
+  if(sq.part === "C") return cardC();
+  return sheetCard();
+}
+
+function sheetTop(title){
+  const u = SHEET[sq.u], pad = String(sq.at+1).padStart(2,"0");
+  const P = PARTS.find(x=>x.k===(sq.part||"A"));
+  return `<div class="block">
+    <div class="ruler">${sq.list.length <= 80
+      ? sq.list.map((i,k)=>`<s class="${k<sq.at?"d":""}${k===sq.at?" c":""}"></s>`).join("")
+      : `<s class="d" style="flex-grow:${sq.at}"></s><s class="c" style="flex-grow:.4"></s><s style="flex-grow:${sq.list.length-sq.at-1}"></s>`}</div>
+    <div class="meta"><span>${u.no} · ${P.k} ${P.label}${sq.redo?" · 틀린 것":""}</span>
+      <span class="mr"><button class="exbtn" id="exs" type="button" title="이상한 문항을 다시 내지 않기">빼기</button><em>${pad} / ${sq.list.length}</em></span></div>
+  </div>`;
+}
+
+function sheetNextButtons(){
+  const last = sq.at + 1 >= sq.list.length;
+  document.getElementById("sbtns").innerHTML = `
+    <button class="btn2" id="slist">목록</button>
+    <button class="btn ink" id="snext">${last ? "끝 · 목록으로" : "다음"}<small>ENTER</small></button>`;
+  document.getElementById("slist").onclick = sheetHome;
+  const nx = document.getElementById("snext");
+  nx.onclick = ()=>{ document.onkeydown = null; sq.at++; sheetGo(); };
+  setTimeout(()=>{ document.onkeydown = e=>{
+    if(e.key!=="Enter" || e.isComposing || e.keyCode===229) return;
+    if(e.target && e.target.tagName === "TEXTAREA") return;
+    e.preventDefault(); nx.click(); }; }, 0);
+}
+
+function sheetCard(){
+  document.onkeydown = null;
+  sq.graded = false;
+  const u = SHEET[sq.u], c = u.cards[sq.list[sq.at]], it = BYID[c.item];
+  const num = c.id.split("-")[1];
+  const lines = c.lines.map(ln=>{
+    const body = ln.p.map(p=> typeof p === "number" && abOff(c, p)
+      ? `<span class="exb" title="뺀 빈칸">${esc(c.ans[p])}</span>`
+      : typeof p === "number"
+      ? `<span class="czn">${circ(p)}</span><input class="cz" data-i="${p}" autocomplete="off" autocapitalize="off"
+           spellcheck="false" style="width:${Math.min(16, Math.max(3.2, c.ans[p].replace(/\s/g,"").length*1.15+1.2))}em">`
+      : esc(p)).join("");
+    const tag = ln.k==="n" ? `<span class="tg">${esc(ln.tag||"각주")}</span>` : "";
+    return `<div class="sln${ln.k==="n"?" n":""}">${tag}${body}</div>`;
+  }).join("");
+  const head = c.hide
+    ? `<div class="nmrow" id="nmrow"><input id="nm" placeholder="${c.map?`지도 ${c.mnum}번의 `:""}이름을 쓰세요" autocomplete="off" spellcheck="false"><span class="v" id="nmv"></span></div>`
+    : `<div class="ttl">${esc(c.title)}</div>`;
+  const pad = String(sq.at+1).padStart(2,"0");
+  app.innerHTML = `
+  ${sheetTop()}
+  ${c.map ? `<div class="block">${mapHTML(it).replace(/<em>\d+번<\/em>/, `<em>지도 ${c.mnum}번</em>`)}</div>` : ""}
+  <div class="block">
+    <div class="scard">
+      <div class="shead"><span class="sid">${num}</span>${head}</div>
+      ${lines || `<div class="sln" style="color:var(--faint)">지도 번호만 보고 이름을 씁니다.</div>`}
+      <div id="sres"></div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="side" id="sbtns">
+      <button class="btn2" id="sback">${sq.at? "이전" : "목록"}</button>
+      <button class="btn" id="sgrade">채점<small>ENTER</small></button>
+    </div>
+  </div>`;
+  bindZoom();
+  const inputs = [...app.querySelectorAll("#nm, .cz")];
+  inputs.forEach((el,k)=>el.onkeydown = e=>{
+    if(e.key!=="Enter" || e.isComposing || e.keyCode===229) return;
+    e.preventDefault();
+    if(k+1 < inputs.length) inputs[k+1].focus(); else gradeCard();
+  });
+  if(inputs[0] && matchMedia("(pointer:fine)").matches) inputs[0].focus();
+  if(!inputs.length) document.onkeydown = e=>{ if(e.key==="Enter"){ e.preventDefault(); gradeCard(); } };
+  document.getElementById("sgrade").onclick = gradeCard;
+  document.getElementById("sback").onclick = ()=>{ if(sq.at){ sq.at--; sheetCard(); } else sheetHome(); };
+  window.scrollTo(0,0);
+}
+
+function gradeCard(){
+  if(sq.graded) return;                 // 마지막 칸에서 누른 Enter 가 두 번 채점하지 않게
+  sq.graded = true;
+  document.onkeydown = null;
+  app.querySelectorAll("#nm, .cz").forEach(el=>el.onkeydown = null);
+  if(document.activeElement) document.activeElement.blur();
+  const u = SHEET[sq.u], c = u.cards[sq.list[sq.at]], it = BYID[c.item];
+  let got = 0;
+  const wrong = [];
+  if(c.hide){
+    const el = document.getElementById("nm"), v = judge(el.value, it);
+    const row = document.getElementById("nmrow");
+    row.classList.add(v ? "ok" : "no");
+    document.getElementById("nmv").innerHTML = v
+      ? `<span style="color:var(--moss)">${v==="typo"?"맞음(오타) · "+esc(it.name):"맞음"}</span>`
+      : `<span style="color:var(--verm)">${esc(it.name)}</span>`;
+    el.readOnly = true;
+    if(v) got++; else wrong.push("이름");
+  }
+  app.querySelectorAll(".cz").forEach(el=>{
+    const i = +el.dataset.i, ok = blankOk(el.value, c.ans[i]);
+    el.readOnly = true;
+    el.classList.add(ok ? "ok" : "no");
+    if(ok) got++;
+    else {
+      wrong.push(circ(i));
+      el.insertAdjacentHTML("afterend", `<span class="fix">${esc(c.ans[i])}</span>`);
+      if(!el.value) el.style.minWidth = "1.2em", el.style.width = "1.2em";
+    }
+  });
+  const max = cardMax(c);
+  sstore[c.id] = {got, max, t: Date.now()}; ssave();
+  record(it, got === max);
+  const idxs = c.ans.map((_,i)=>i).filter(i=>!abOff(c,i));
+  document.getElementById("sres").innerHTML = `<div class="sgrade">
+    <span>${wrong.length ? "틀린 칸 " + wrong.join(" ") : "모두 맞음"}</span>
+    <span><b class="${got===max?"full":""}" id="agot">${got}</b> / <span id="amax">${max}</span></span></div>
+    ${idxs.length ? `<div style="margin-top:12px;font:500 11.5px var(--sans);color:var(--faint)">이상한 빈칸은 눌러서 빼기 — 다음부터는 답이 보이는 채로 나옵니다</div>
+    <div style="margin-top:6px">${idxs.map(i=>`<button class="abx" data-i="${i}">${circ(i)} ${esc(c.ans[i])}</button>`).join("")}</div>` : ""}`;
+  document.querySelectorAll(".abx").forEach(bt=>bt.onclick=()=>{
+    const i = +bt.dataset.i, key = c.id + "#" + i;
+    if(EX.ab[key]) delete EX.ab[key]; else EX.ab[key] = {ans:c.ans[i], card:c.id, name:it.name};
+    xsave(); bt.classList.toggle("on", !!EX.ab[key]);
+    // 뺀 빈칸은 점수에서도 뺀다
+    let g = 0;
+    if(c.hide && document.getElementById("nmrow").classList.contains("ok")) g++;
+    app.querySelectorAll(".cz.ok").forEach(el=>{ if(!abOff(c, +el.dataset.i)) g++; });
+    sstore[c.id] = {got:g, max:cardMax(c), t:Date.now()}; ssave();
+    document.getElementById("agot").textContent = g; document.getElementById("amax").textContent = cardMax(c);
+  });
+  const last = sq.at + 1 >= sq.list.length;
+  document.getElementById("sbtns").innerHTML = `
+    <button class="btn2" id="slist">목록</button>
+    <button class="btn ink" id="snext">${last ? "단원 끝 · 목록으로" : "다음 카드"}<small>ENTER</small></button>`;
+  document.getElementById("slist").onclick = sheetHome;
+  const nx = document.getElementById("snext");
+  nx.onclick = ()=>{ document.onkeydown = null; sq.at++; sheetGo(); };
+  setTimeout(()=>{ document.onkeydown = e=>{
+    if(e.key!=="Enter" || e.isComposing || e.keyCode===229) return;
+    e.preventDefault(); nx.click(); }; }, 0);
+  document.getElementById("sres").scrollIntoView({block:"nearest", behavior:"smooth"});
+}
+
+/* B 특징 → 이름 */
+function cardB(){
+  document.onkeydown = null; sq.graded = false;
+  const q = SHEET[sq.u].b[sq.list[sq.at]];
+  const lines = q.lines.map(l=>`<div class="sln${l.k==="n"?" n":""}">${
+    l.k==="n"?`<span class="tg">${esc(l.tag||"각주")}</span>`:""}${esc(l.t)}</div>`).join("");
+  app.innerHTML = `${sheetTop()}
+  <div class="block"><div class="scard">
+    <div class="shead"><span class="sid">${q.id.split("-")[1]}</span>
+      <span style="font:600 13px var(--sans);color:var(--ink2)">어느 곳(무엇)의 설명인가?</span></div>
+    ${lines}
+    <div class="nmrow" id="nmrow" style="margin-top:12px"><input id="nm" placeholder="이름을 쓰세요" autocomplete="off" spellcheck="false"><span class="v" id="nmv"></span></div>
+    <div id="sres"></div>
+  </div></div>
+  <div class="actions"><div class="side" id="sbtns">
+    <button class="btn2" id="sback">${sq.at?"이전":"목록"}</button>
+    <button class="btn" id="sgrade">채점<small>ENTER</small></button>
+  </div></div>`;
+  const nm = document.getElementById("nm");
+  if(matchMedia("(pointer:fine)").matches) nm.focus();
+  nm.onkeydown = e=>{ if(e.key==="Enter" && !e.isComposing && e.keyCode!==229){ e.preventDefault(); gradeB(); } };
+  document.getElementById("sgrade").onclick = gradeB;
+  document.getElementById("sback").onclick = ()=>{ if(sq.at){ sq.at--; sheetGo(); } else sheetHome(); };
+  window.scrollTo(0,0);
+}
+function gradeB(){
+  if(sq.graded) return; sq.graded = true;
+  const q = SHEET[sq.u].b[sq.list[sq.at]];
+  const nm = document.getElementById("nm"); nm.onkeydown = null; nm.readOnly = true; nm.blur();
+  const its = q.ans.map(id=>BYID[id]);
+  const hit = its.map(it=>judge(nm.value, it)).find(Boolean);
+  const names = [...new Set(its.map(it=>it.name))].join(" / ");
+  document.getElementById("nmrow").classList.add(hit?"ok":"no");
+  document.getElementById("nmv").innerHTML = hit
+    ? `<span style="color:var(--moss)">${hit==="typo"?"맞음(오타) · "+esc(names):"맞음"}</span>`
+    : `<span style="color:var(--verm)">${esc(names)}</span>`;
+  sstore[q.k] = {got: hit?1:0, max:1, t:Date.now()}; ssave();
+  record(its[0], !!hit);
+  if(!hit) document.getElementById("sres").innerHTML =
+    `<div class="allfeat" style="margin-top:14px"><lbl>${esc(its[0].name)}의 다른 특징</lbl>${
+      feats(its[0]).map(f=>`<div class="feat"><i></i><span>${esc(f)}</span></div>`).join("")}</div>`;
+  sheetNextButtons();
+}
+
+/* C 이름 → 특징 — 떠올린 뒤 정답을 펴서 떠올린 것에 스스로 표시한다 */
+function cardC(){
+  document.onkeydown = null;
+  const e = SHEET[sq.u].c[sq.list[sq.at]], it = BYID[e.item];
+  app.innerHTML = `${sheetTop()}
+  ${e.map ? `<div class="block">${mapHTML(it).replace(/<em>\d+번<\/em>/, `<em>지도 ${e.mnum}번</em>`)}</div>` : ""}
+  <div class="block"><div class="scard">
+    <div class="shead"><span class="sid">${e.id.split("-")[1]}</span><div class="ttl">${esc(it.name)}</div>
+      <span style="margin-left:auto;font:700 12px var(--mono);color:var(--verm)">${e.n}가지</span></div>
+    <textarea class="memo" id="memo" placeholder="떠오르는 특징을 적어 보세요(적지 않고 머릿속으로만 떠올려도 됩니다)"></textarea>
+    <div id="sres"></div>
+  </div></div>
+  <div class="actions"><div class="side" id="sbtns">
+    <button class="btn2" id="sback">${sq.at?"이전":"목록"}</button>
+    <button class="btn" id="sshow">정답 펴기</button>
+  </div></div>`;
+  bindZoom();
+  document.getElementById("sback").onclick = ()=>{ if(sq.at){ sq.at--; sheetGo(); } else sheetHome(); };
+  document.getElementById("sshow").onclick = showC;
+  window.scrollTo(0,0);
+}
+function showC(){
+  const e = SHEET[sq.u].c[sq.list[sq.at]], it = BYID[e.item];
+  const rows = [...it.features.map(f=>({t:f})), ...(it.notes||[]).map(n=>({t:n, n:true}))];
+  const memo = document.getElementById("memo"); memo.readOnly = true;
+  document.getElementById("sres").innerHTML = `
+    <div style="margin-top:14px;font:600 12px var(--sans);color:var(--ink2)">떠올린 것을 누르세요</div>
+    <ul class="rcl">${rows.map((r,i)=>`<li data-i="${i}"><button aria-label="떠올림">✓</button><span>${
+      r.n?`<span class="tg">각주</span>`:""}${esc(r.t)}</span></li>`).join("")}</ul>
+    <div class="sgrade"><span>떠올린 수</span><span><b id="cgot">0</b> / ${rows.length}</span></div>`;
+  const on = new Set();
+  document.querySelectorAll(".rcl li").forEach(li=>li.onclick=()=>{
+    const i = +li.dataset.i; on.has(i) ? on.delete(i) : on.add(i);
+    li.classList.toggle("on", on.has(i));
+    const g = document.getElementById("cgot"); g.textContent = on.size; g.className = on.size===rows.length?"full":"";
+  });
+  document.getElementById("sbtns").innerHTML = `
+    <button class="btn2" id="sall">다 떠올림</button>
+    <button class="btn ink" id="ssave">저장하고 다음</button>`;
+  document.getElementById("sall").onclick = ()=>document.querySelectorAll(".rcl li:not(.on)").forEach(li=>li.click());
+  document.getElementById("ssave").onclick = ()=>{
+    sstore[e.id] = {got: on.size, max: rows.length, t: Date.now()}; ssave();
+    record(it, on.size === rows.length);
+    sq.at++; sheetGo();
+  };
+  document.getElementById("sres").scrollIntoView({block:"nearest", behavior:"smooth"});
+}
+
+/* ---------- 빼기 ---------- */
+function xmodal(title, desc, quote, options){
+  const m = document.createElement("div");
+  m.className = "xmodal";
+  m.innerHTML = `<div class="box"><h3>${esc(title)}</h3>${desc?`<p>${esc(desc)}</p>`:""}
+    ${quote?`<q>${esc(quote)}</q>`:""}
+    ${options.map((o,i)=>`<button class="opt2" data-i="${i}"><b>${esc(o.label)}</b>${o.hint?`<small>${esc(o.hint)}</small>`:""}</button>`).join("")}
+    <button class="btn2" data-x="1">그만두기</button></div>`;
+  const close = ()=>{ m.remove(); document.onkeydown = keep; };
+  const keep = document.onkeydown; document.onkeydown = null;
+  m.onclick = e=>{
+    if(e.target === m || e.target.closest("[data-x]")) return close();
+    const b = e.target.closest(".opt2"); if(!b) return;
+    m.remove(); document.onkeydown = keep; options[+b.dataset.i].run();
+  };
+  document.body.appendChild(m);
+}
+
+function dropCurrentQ(){
+  document.onkeydown = null;
+  if(quiz.log.length > quiz.at){ const l = quiz.log.pop(); if(l.ok) quiz.right--; }   // 이미 답했으면 점수에서 뺀다
+  quiz.qs.splice(quiz.at, 1);
+  if(quiz.at < quiz.qs.length) render();
+  else if(quiz.qs.length) result();
+  else home();
+}
+
+function excludeQuiz(){
+  const q = quiz.qs[quiz.at], it = q.item;
+  const TL = (TYPES.find(t=>t.key===q.type)||{label:q.type}).label;
+  const sent = q.type==="feat" ? (q.opts.find(o=>o.ok)||{}).f
+             : q.type==="rfeat" ? q.clue
+             : q.type==="ox" ? q.stmt : null;
+  const opts = [];
+  if(sent) opts.push({label:"이 문장 빼기", hint:"모든 유형의 문제와 보기에서 이 문장을 쓰지 않습니다",
+    run:()=>{ EX.s[norm(sent)] = {text:sent, name:it.name}; xsave(); buildOwners(); dropCurrentQ(); }});
+  opts.push({label:`'${it.name}'을(를) '${TL}'에서 빼기`, hint:"이 항목은 이 유형으로 다시 나오지 않습니다(다른 유형으로는 나옵니다)",
+    run:()=>{ EX.t[q.type + "|" + it.id] = {type:TL, name:it.name}; xsave(); dropCurrentQ(); }});
+  xmodal("이 문제 빼기", "이상한 문제를 다시 내지 않습니다. 홈의 '뺀 문제'에서 언제든 되돌릴 수 있습니다.", sent, opts);
+}
+
+function excludeSheet(){
+  const u = SHEET[sq.u], P = PARTS.find(x=>x.k===(sq.part||"A")), q = P.get(u)[sq.list[sq.at]];
+  const label = P.k==="A" ? `${q.id} ${BYID[q.item].name}`
+              : P.k==="B" ? `${q.id} ${q.lines.map(l=>l.t).join(" / ")}`
+              : `${q.id} ${BYID[q.item].name}`;
+  const quote = P.k==="B" ? q.lines.map(l=>l.t).join("\n") : BYID[q.item].name;
+  const opts = [{label: P.k==="A" ? "이 카드 통째로 빼기" : "이 문항 빼기",
+    hint: P.k==="A" ? "빈칸 하나만 빼려면 채점한 뒤 아래 빈칸 단추를 누르세요" : "점수·진행률에서도 빠집니다",
+    run:()=>{ EX.q[qKey(P.k, q)] = {part:P.k, label}; xsave();
+      sq.list.splice(sq.at, 1); sq.graded = false; document.onkeydown = null; sheetGo(); }}];
+  xmodal(`${P.k} ${P.label} — 빼기`, "홈의 '뺀 문제'에서 되돌릴 수 있습니다. PDF 에는 반영되지 않습니다.", quote, opts);
+}
+
+app.addEventListener("click", e=>{
+  if(e.target.closest("#exq")) excludeQuiz();
+  else if(e.target.closest("#exs")) excludeSheet();
+});
+
+function exHome(back){
+  document.onkeydown = null;
+  const row = (sec, k, small, text) => `<div class="xrow"><div class="l"><small>${esc(small)}</small>${esc(text)}</div>
+      <button class="btn2" style="min-height:36px;width:auto;padding:0 12px" data-sec="${sec}" data-k="${esc(k)}">되돌리기</button></div>`;
+  const S = Object.entries(EX.s).map(([k,v])=>row("s",k,`문장 · ${v.name}`, v.text));
+  const T = Object.entries(EX.t).map(([k,v])=>row("t",k,`유형 · ${v.type}`, v.name));
+  const Q = Object.entries(EX.q).map(([k,v])=>row("q",k,`전수 점검 ${v.part}`, v.label));
+  const AB = Object.entries(EX.ab).map(([k,v])=>row("ab",k,`전수 점검 A 빈칸 · ${v.card} ${v.name}`, v.ans));
+  const sec = (title, arr) => arr.length ? `<div class="block"><div class="sec"><span>${title}</span><i></i><em>${arr.length}</em></div>${arr.join("")}</div>` : "";
+  app.innerHTML = `
+    ${sec("뺀 문장", S)}${sec("유형에서 뺀 항목", T)}${sec("전수 점검에서 뺀 문항", Q)}${sec("전수 점검에서 뺀 빈칸", AB)}
+    ${exCount() ? "" : `<div class="block center">뺀 문제가 없습니다.</div>`}
+    <div class="stack">
+      ${exCount() ? `<button class="btn2 verm" id="xall">모두 되돌리기</button>` : ""}
+      <button class="btn2" id="xback">돌아가기</button>
+    </div>`;
+  app.querySelectorAll("[data-sec]").forEach(b=>b.onclick=()=>{
+    delete EX[b.dataset.sec][b.dataset.k]; xsave(); buildOwners(); exHome(back);
+  });
+  const xa = document.getElementById("xall");
+  if(xa) xa.onclick = ()=>{ if(confirm("뺀 문제를 모두 되돌립니다.")){ EX = {s:{}, t:{}, q:{}, ab:{}}; xsave(); buildOwners(); exHome(back); } };
+  document.getElementById("xback").onclick = back;
+  window.scrollTo(0,0);
+}
+
+home();
+</script>
+</body>
+</html>
