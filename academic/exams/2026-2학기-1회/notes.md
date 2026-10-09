@@ -8,7 +8,7 @@
 1:4 2:1 3:2(OMR 확인) 4:4 5:1 6:5 7:3 8:4 9:4 10:2 11:5 12:2 13:1 14:3 15:2 16:3 17:2(OMR 확인) 18:5 19:5 20:2 21:1
 서1 (A) local business owners (B) discourage the influx of visitors (C) reduced profits
 서2 [2점으로 확정] (A) not because a relatively minor change but because (B) remind of us how easily
-서3 (A) bizzarre(본인 확인) (B) lifestyles.
+서3 (A) bizarre(본인 확인, 정답) (B) lifestyles.
 서4 (C) people are no longer restricted to specific locations for
 서5 (A) ① inaccessible -> accessible (B) ⑤ external -> internal
 
