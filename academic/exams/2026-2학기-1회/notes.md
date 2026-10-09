@@ -25,3 +25,8 @@
 서2(7) (A4) not because the alteration(change/modification/manipulation) was drastic but because (B3) reminded us of the risk(danger)
 서3(4) bizarre / nomadic lifestyles   서4(7) people are no longer restricted to specific locations for
 서5(6) (A) ① inaccessible→connected/linked/accessible (B) ④ previous→alternative/other/new/different
+
+## 현윤 학생 표시 (첫 업로드 사진 a1b60816, 287836b8, 6d7f401d, 48645663 …)
+1:2 2:5 3:3 4:1 5:5 6:2 7:5 8:2 9:4 10:3 11:2 12:4 13:1 14:1 15:3 16:5 17:2 18:1 19:1 20:5
+서1 상학? 팔정도  서2 ㉠제물 ㉡소요유 ㉢좌망 ㉣심재  서3 ㉠자연?(위에 자연, 아래 영원·신성 등 낙서) ㉡실정  서4 플라톤 에피쿠로스 하이데거 석가모니
+서5 (가)싱어 (나)레건  서6 인-측은지심, 의-수오지심, 예-사양지심, 지-시비지심  서7 정진 지혜 선정  서8 부부유별 붕우유신 군신유의
